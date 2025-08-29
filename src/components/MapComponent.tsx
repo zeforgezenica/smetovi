@@ -40,6 +40,43 @@ export default function MapComponent({ pins }: MapComponentProps) {
           attribution: "© OpenStreetMap contributors",
         }).addTo(map);
 
+        var parkingCoords: L.LatLngExpression[] = [
+          [44.242332, 17.973421],
+          [44.242019, 17.973013],
+          [44.242054, 17.973692],
+          [44.241919, 17.974494],
+          [44.242100, 17.975521],
+          [44.242202, 17.975709],
+          [44.242325, 17.975749],
+          [44.242419, 17.975663],
+          [44.242463, 17.975473]
+        ];
+
+        var parkingArea = L.polygon(parkingCoords, {
+          fillColor: '#3f8efc',
+          fillOpacity: 0.5
+        }).addTo(map);
+
+        parkingArea.bindPopup(
+          `
+            <div
+              class="flex flex-col items-center"
+              style="width: 200px; padding-bottom: 5px;"
+            >
+              <img
+                src="images/parking.jpg"
+                alt="Parking"
+                class="w-full h-auto mb-2"
+                style="max-width: 200px; max-height: 200px;"
+              />
+              <div
+                class="text-center w-full"
+                style="word-wrap: break-word; padding-inline:5px;"
+              > Parking </div>
+            </div>
+          `
+        );
+
         pins.forEach((pin) => {
           const popupContent = `
             <div
