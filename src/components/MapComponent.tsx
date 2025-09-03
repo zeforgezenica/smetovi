@@ -25,6 +25,12 @@ export default function MapComponent({ pins }: MapComponentProps) {
           className: 'myDivIcon'
         });
 
+        const parkingIcon = L.divIcon({
+          html: '<i class="fas fa-sharp fa-solid fa-square-parking fa-2x"></i>',
+          iconSize: [20, 20],
+          className: 'parkingIcon'
+        });
+
         const map = L.map("map", {
           center: [44.24541, 17.96368],
           zoom: 11,
@@ -57,7 +63,7 @@ export default function MapComponent({ pins }: MapComponentProps) {
           fillOpacity: 0.5
         }).addTo(map);
 
-        parkingArea.bindPopup(
+        var parkingPopup = 
           `
             <div
               class="flex flex-col items-center"
@@ -74,8 +80,9 @@ export default function MapComponent({ pins }: MapComponentProps) {
                 style="word-wrap: break-word; padding-inline:5px;"
               > Parking </div>
             </div>
-          `
-        );
+          `;
+        parkingArea.bindPopup(parkingPopup);
+        L.marker([44.242175, 17.974411], {icon: parkingIcon}).addTo(map).bindPopup(parkingPopup);
 
         pins.forEach((pin) => {
           const popupContent = `
