@@ -26,12 +26,12 @@ export default function MapComponent({ pins }: MapComponentProps) {
         });
 
         const monumentIcon = L.icon({
-          iconUrl: "/Monument Icon.svg",
+          iconUrl: "/monument-icon.svg",
           iconSize: [30, 30],
           className: 'monumentIcon'
         });
 
-        function makeIcon(html:string, className= 'customIcon'){
+        function makeIcon(html: string, className = 'customIcon'){
           return L.divIcon({
             html,
             iconSize: [20, 20],
