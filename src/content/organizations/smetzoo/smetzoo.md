@@ -12,7 +12,7 @@ mapUrl: "https://www.google.com/maps/place/Konji%C4%8Dki+klub+SMET+-+mini+ZOO+vr
 
 Konjički klub SMET – mini zoo vrt je mjesto gdje ljubitelji prirode, konja i životinja mogu uživati u opuštenom i zdravom okruženju. Posjetioci imaju priliku da vide konje, uče o njihovoj njezi i provedu kvalitetno vrijeme na otvorenom.
 
-Pored konjičkog dijela, klub nudi i mini zoo vrt sa različitim domaćim i životinjama. Djeca i odrasli mogu se upoznati sa životinjama izbliza, što ga čini posebno atraktivnim za porodične izlete.
+Pored konjičkog dijela, klub nudi i mini zoo vrt sa različitim domaćim životinjama. Djeca i odrasli mogu se upoznati sa životinjama izbliza, što ga čini posebno atraktivnim za porodične izlete.
 
 Ambijent kluba pruža mir i bijeg od gradske gužve, dok raznolike aktivnosti zadovoljavaju i one koji žele avanturu i one koji traže relaksaciju. Idealno je mjesto za edukaciju, rekreaciju i druženje u prirodi.
 
