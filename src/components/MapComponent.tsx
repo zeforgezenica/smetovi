@@ -31,7 +31,7 @@ export default function MapComponent({ pins }: MapComponentProps) {
           className: 'monumentIcon'
         });
 
-        function makeIcon(html:string, className= 'customIcon'){
+        function makeIcon(html: string, className = 'customIcon'){
           return L.divIcon({
             html,
             iconSize: [20, 20],
