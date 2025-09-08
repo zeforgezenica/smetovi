@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-// Parking image path constant for maintainability
 const PARKING_IMAGE_PATH = "images/parking.jpg";
 import "leaflet/dist/leaflet.css";
 import type { MapPin } from "../models/map.pin.model";
