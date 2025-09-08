@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+// Parking image path constant for maintainability
+const PARKING_IMAGE_PATH = "images/parking.jpg";
 import "leaflet/dist/leaflet.css";
 import type { MapPin } from "../models/map.pin.model";
 
@@ -22,13 +24,13 @@ export default function MapComponent({ pins }: MapComponentProps) {
         L.Marker.prototype.options.icon = L.divIcon({
           html: '<i class="fas fa-map-marker-alt fa-2x"></i>',
           iconSize: [20, 20],
-          className: 'myDivIcon'
+          className: "myDivIcon",
         });
 
         const parkingIcon = L.divIcon({
           html: '<i class="fas fa-sharp fa-solid fa-square-parking fa-2x"></i>',
           iconSize: [20, 20],
-          className: 'parkingIcon'
+          className: "parkingIcon",
         });
 
         const map = L.map("map", {
@@ -46,31 +48,30 @@ export default function MapComponent({ pins }: MapComponentProps) {
           attribution: "© OpenStreetMap contributors",
         }).addTo(map);
 
-        var parkingCoords: L.LatLngExpression[] = [
+        const parkingCoords: L.LatLngExpression[] = [
           [44.242332, 17.973421],
           [44.242019, 17.973013],
           [44.242054, 17.973692],
           [44.241919, 17.974494],
-          [44.242100, 17.975521],
+          [44.2421, 17.975521],
           [44.242202, 17.975709],
           [44.242325, 17.975749],
           [44.242419, 17.975663],
-          [44.242463, 17.975473]
+          [44.242463, 17.975473],
         ];
 
-        var parkingArea = L.polygon(parkingCoords, {
-          fillColor: '#3f8efc',
-          fillOpacity: 0.5
+        const parkingArea = L.polygon(parkingCoords, {
+          fillColor: "#3f8efc",
+          fillOpacity: 0.5,
         }).addTo(map);
 
-        var parkingPopup = 
-          `
+        const parkingPopup = `
             <div
               class="flex flex-col items-center"
               style="width: 200px; padding-bottom: 5px;"
             >
               <img
-                src="images/parking.jpg"
+                src="${PARKING_IMAGE_PATH}"
                 alt="Parking"
                 class="w-full h-auto mb-2"
                 style="max-width: 200px; max-height: 200px;"
@@ -82,7 +83,9 @@ export default function MapComponent({ pins }: MapComponentProps) {
             </div>
           `;
         parkingArea.bindPopup(parkingPopup);
-        L.marker([44.242175, 17.974411], {icon: parkingIcon}).addTo(map).bindPopup(parkingPopup);
+        L.marker([44.242175, 17.974411], { icon: parkingIcon })
+          .addTo(map)
+          .bindPopup(parkingPopup);
 
         pins.forEach((pin) => {
           const popupContent = `
