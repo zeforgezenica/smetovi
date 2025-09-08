@@ -5,7 +5,7 @@ workHours: "0-24h"
 phone: "062472750"
 contact: "https://www.facebook.com/konjickiubsmet/"
 description: "Konjički klub Smet – mini ZOO vrt nudi druženje s konjima i domaćim životinjama u prirodnom ambijentu, idealno za rekreaciju i porodična druženja."
-heroImage: "/images/organizations//smetzoo/smetzoo.jpg"
+heroImage: "/images/organizations/smetzoo/smetzoo.jpg"
 location: [44.2418609, 17.9691240]
 mapUrl: "https://www.google.com/maps/place/Konji%C4%8Dki+klub+SMET+-+mini+ZOO+vrt/@44.241688,17.9691133,601m/data=!3m2!1e3!4b1!4m6!3m5!1s0x475ee1d89277c877:0x681df89469139a43!8m2!3d44.241688!4d17.9691133!16s%2Fg%2F11m_zhscq4?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D"
 ---
