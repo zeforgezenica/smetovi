@@ -1,12 +1,21 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import { getCollection } from 'astro:content';
+import BaseHead from "../components/BaseHead.astro"; 
+import Header from '../components/Header.astro'; 
+import Footer from '../components/Footer.astro'
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts'; 
+import EventCalendar from '../components/EventCalendar/EventCalendar.tsx';
+const events = (await getCollection('events'))
+console.log("events", events);
 ---
 
-<Layout
-	title="Aktivnosti"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
->
-
-<h1>Na ovoj stranici će biti prikazani svi događaji koji imaju veze sa planinom Smetovi</h1>
-</Layout>
+<head>
+<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
+</head>
+<body>
+	<Header/>
+	<div class="mx-4 md:mx-8 lg:mx-16 mt-24 mb-8">
+    	<EventCalendar events={events} client:load />
+	</div>
+	<Footer/>
+</body>
