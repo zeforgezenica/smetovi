@@ -1,0 +1,270 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BaseHead from "../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="about-page">
+    
+    <Header />
+    <main class="flex flex-col justify-center w-[90%] lg:w-[85%] mx-auto mt-24">
+      
+      <!-- Hero Section -->
+      <section class="about-hero mb-12">
+        <h1 class="md:px-2 max-md:mx-2 rounded font-exo2 uppercase text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          O nama
+        </h1>
+        <hr class="md:px-2 mx-2 bg-yellow border-0 h-1 w-56 mb-6" />
+        <p class="md:px-2 max-md:mx-2 text-lg mb-8">
+          Dobrodošli na Smetove - planinu koja spaja prirodu, tradiciju i zajednicu
+        </p>
+      </section>
+
+      <!-- Content Sections -->
+      <div class="flex flex-col lg:flex-row gap-8">
+        
+        <!-- Left Column -->
+        <section class="about-content w-full lg:w-1/2">
+          <h2 class="md:px-2 max-md:mx-2 font-exo2 uppercase text-2xl sm:text-3xl font-bold mb-4">
+            Naša Misija
+          </h2>
+          <hr class="md:px-2 mx-2 bg-yellow border-0 h-1 w-40 mb-4" />
+          <p class="m-2 mb-6">
+            Smetovi predstavljaju oazu prirode u srcu Bosne i Hercegovine. Naša misija je 
+            očuvanje prirodnog nasleđa, promocija održivog turizma i povezivanje ljudi sa 
+            prirodom kroz planinarenje i rekreativne aktivnosti.
+          </p>
+
+          <h2 class="md:px-2 max-md:mx-2 font-exo2 uppercase text-2xl sm:text-3xl font-bold mb-4 mt-8">
+            Naša Istorija
+          </h2>
+          <hr class="md:px-2 mx-2 bg-yellow border-0 h-1 w-40 mb-4" />
+          <p class="m-2 mb-6">
+            Planina Smetovi je vekovima bila dom lokalne zajednice, čuvajući bogate tradicije 
+            i prirodne lepote. Danas nastavljamo da negujemo ovu baštinu kroz organizovane 
+            aktivnosti i program očuvanja prirode.
+          </p>
+        </section>
+
+        <!-- Right Column -->
+        <section class="about-content w-full lg:w-1/2">
+          
+
+          <h2 class="md:px-2 max-md:mx-2 font-exo2 uppercase text-2xl sm:text-3xl font-bold mb-4 mt-8">
+            Pridružite Se
+          </h2>
+          <hr class="md:px-2 mx-2 bg-yellow border-0 h-1 w-40 mb-4" />
+          <p class="m-2 mb-4">
+            Postanite deo naše zajednice ljubitelja prirode! Pratite naše aktivnosti, 
+            pridružite se našim događajima i otkrijte čari planine Smetovi.
+          </p>
+          <div class="m-2">
+            <a href="/contact">
+              <div class="diagonal-border p-[2px] bg-darkBlue">
+                <div class="diagonal-square px-4 py-2 w-40">
+                  Kontaktirajte nas
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Testimonials Section -->
+      <section class="testimonials-section mt-16 mb-12">
+        <h2 class="md:px-2 max-md:mx-2 font-exo2 uppercase text-3xl sm:text-4xl font-bold mb-4 text-center">
+          Što kažu naši posjetitelji
+        </h2>
+        <hr class="bg-yellow border-0 h-1 w-56 mb-12 mx-auto" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Marko Petrović</h4>
+                <p class="text-sm text-gray-600">Zenica</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Smetovi su pravi dragulj! Nevjerojatan pogled, čist zrak i odlične staze za planinarenje. 
+              Svakako ću se vratiti sa familijom."
+            </p>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Ana Milanović</h4>
+                <p class="text-sm text-gray-600">Sarajevo</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Organizovali su fantastičnu voženu turu. Vodič je bio vrlo informisan i iskusan. 
+              Preporučujem svima koji vole prirodu!"
+            </p>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Stefan Jovanović</h4>
+                <p class="text-sm text-gray-600">Tuzla</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-gray-300"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Odličo mjesto za bijeg od gradske vreve. Posebno mi se sviđa što se organizuju 
+              aktivnosti za čišćenje planine. Bravo za trud!"
+            </p>
+          </div>
+
+          <!-- Testimonial 4 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Milica Stanković</h4>
+                <p class="text-sm text-gray-600">Banja Luka</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Sa djecom smo učesrtvovali u edukativnoj radionici o lokalnoj fauni. 
+              Djeca su bila oduševljena, a i mi odrasli smo puno naučili!"
+            </p>
+          </div>
+
+          <!-- Testimonial 5 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Dejan Nikolić</h4>
+                <p class="text-sm text-gray-600">Travnik</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Kao fotograf, mogu reći da Smetovi nude spektakularne kadrove. 
+              Svaki godišnje doba ima svoju čar i ljepotu."
+            </p>
+          </div>
+
+          <!-- Testimonial 6 -->
+          <div class="testimonial-card bg-white p-6 rounded-lg shadow-lg border-l-4 border-yellow">
+            <div class="flex items-center mb-4">
+              <div class="testimonial-avatar bg-darkBlue text-white rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-darkBlue">Emina Hadžić</h4>
+                <p class="text-sm text-gray-600">Mostar</p>
+              </div>
+            </div>
+            <div class="flex mb-3">
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-yellow"></i>
+              <i class="fa-solid fa-star text-gray-300"></i>
+            </div>
+            <p class="text-gray-700 italic">
+              "Prva posjeta Smetovima, ali definitivno ne i poslednja! 
+              Planinski dom je udoban, a personal bardzo prijatelan."
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Call to Action for Reviews -->
+        <div class="text-center mt-12">
+          <h3 class="font-exo2 uppercase text-xl font-bold mb-4 text-darkBlue">
+            Podijelite svoje iskustvo
+          </h3>
+          <p class="mb-6 text-gray-700">
+            Da li ste posjetili Smetove? Podijelite svoje iskustvo sa drugima!
+          </p>
+          <a href="/contact">
+            <div class="diagonal-border p-[2px] bg-darkBlue inline-block">
+              <div class="diagonal-square px-6 py-3">
+                Ostavite recenziju
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+    <Footer />
+
+    <svg width="0" height="0" class="hidden">
+      <defs>
+        <mask id="diagonal-mask" maskUnits="objectBoundingBox">
+          <polygon fill="white" points="
+            0,0         <!-- top-left -->
+            0.9,0       <!-- almost top-right -->
+            1,0.1       <!-- diagonal top-right -->
+            1,1         <!-- bottom-right -->
+            0.1,1       <!-- almost bottom-left -->
+            0,0.9       <!-- diagonal bottom-left -->
+          " />
+        </mask>
+      </defs>
+    </svg>
+  </body>
+</html>
