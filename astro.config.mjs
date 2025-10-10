@@ -18,6 +18,17 @@ export default defineConfig({
       enabled: true
     }
   }),
+  i18n: {
+    defaultLocale: 'sr',
+    locales: ['sr', 'en'],
+    routing: {
+      prefixDefaultLocale: false, // Serbian URLs won't have /sr/ prefix
+      redirectToDefaultLocale: true, // Redirect /sr/* to /*
+    },
+    fallback: {
+      en: 'sr' // If English content missing, fallback to Serbian
+    }
+  },
   vite: {
     plugins: [tailwind()]
   }

@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/BlogPost.astro';
+import { getLangFromUrl } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<Layout
+    title="Activities"
+    description="Events and activities related to Smetovi mountain"
+    pubDate={new Date('August 08 2021')}
+    lang={lang}
+>
+
+<h1>This page will display all events related to Smetovi mountain</h1>
+
+</Layout>
