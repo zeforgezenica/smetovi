@@ -2,22 +2,7 @@
 import HeaderLink from './HeaderLink.astro';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Weather from './WeatherComponent/WeatherComponent.tsx';
-import LanguageSwitcher from './LanguageSwitcher.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
-// Create language-aware URLs
-const homeUrl = lang === 'sr' ? '/' : '/en/';
-const mapUrl = lang === 'sr' ? '/map' : '/en/map';
-const blogUrl = lang === 'sr' ? '/blog' : '/en/blog';
-const organizationsUrl = lang === 'sr' ? '/organizations' : '/en/organizations';
-const eventsUrl = lang === 'sr' ? '/events' : '/en/events';
-const contactUrl = lang === 'sr' ? '/contact' : '/en/contact';
-const imagesUrl = lang === 'sr' ? '/Images' : '/en/Images';
-const aboutUrl = lang === 'sr' ? '/about' : '/en/about';
 ---
 
 <script is:inline>
@@ -34,58 +19,41 @@ const aboutUrl = lang === 'sr' ? '/about' : '/en/about';
         : 'fa-solid fa-xmark';
       }
     });
-
-    // Close mobile menu when clicking on a link
-    const mobileLinks = menuContainer?.querySelectorAll('a');
-    mobileLinks?.forEach(link => {
-      link.addEventListener('click', () => {
-        menuContainer.classList.add('hidden');
-        const icon = menuButton?.querySelector('i');
-        if (icon) {
-          icon.className = 'fa-solid fa-bars';
-        }
-      });
-    });
   });
 </script>
 
 <header class="fixed top-0 left-0 blur-background w-full shadow-md h-14 flex items-center">
-  <nav class="flex items-center justify-between h-full w-full p-2">
-    <!-- Logo -->
-    <a href={homeUrl}>
-      <img 
-        id="navbar-logo" 
-        src="/smetovi-logo.png" 
-        alt="Smetovi Logo" 
-        class="p-2 w-35vw md:w-20vw lg:w-64"
-      >
-    </a>
-
-    <!-- Desktop Navigation -->
-    <div class="internal-links hidden md:flex items-center gap-1">
-      <HeaderLink href={mapUrl}>{t('nav.map')}</HeaderLink>
-      <HeaderLink href={homeUrl}>{t('nav.home')}</HeaderLink>
-      <HeaderLink href={blogUrl}>{t('nav.news')}</HeaderLink>
-      <HeaderLink href={organizationsUrl}>{t('nav.organizations')}</HeaderLink>
-      <HeaderLink href={eventsUrl}>{t('nav.events')}</HeaderLink>
-      <HeaderLink href={contactUrl}>{t('nav.contact')}</HeaderLink>
-      <HeaderLink href={imagesUrl}>{t('nav.pictures')}</HeaderLink>
-      <HeaderLink href={aboutUrl}>{t('nav.about')}</HeaderLink>
+  <nav class="flex items-center justify-around h-full w-full flex items-center p-0">
+    <a href="/"><img id="navbar-logo" src="/smetovi-logo.png" alt="Smetovi Logo" class="p-2 w-35vw md:w-20vw lg:w-64"></a>
+    <div class="internal-links hidden md:block">
+      <HeaderLink href="/map">Mapa</HeaderLink>
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Vijesti</HeaderLink>
+      <HeaderLink href="/organizations">Organizacije</HeaderLink>
+      <HeaderLink href="/events">Događaji</HeaderLink>
+      <HeaderLink href="/contact">Kontakt</HeaderLink>
+      <HeaderLink href="/Images">Slike</HeaderLink>
+      <HeaderLink href="/about">O Nama</HeaderLink>
+      <!-- <HeaderLink href="/recenzije">Recenzije</HeaderLink> -->
     </div>
-
-    <!-- Right side: Language Switcher, Weather, Mobile Menu -->
-    <div class="flex items-center gap-2">
-      <!-- Language Switcher (Desktop) -->
-      <div class="hidden md:block">
-        <LanguageSwitcher />
-      </div>
-
-      <!-- Weather Component -->
-      <div class="weather flex flex-col justify-center items-center">
+    <div class="flex">
+      <div class="weather flex flex-col justify-center items-center mr-2">
         <Weather client:load/>
       </div>  
-
-      <!-- Mobile Menu Button -->
+      <!-- Move this to contact page and footer pls
+      <a 
+        href="https://github.com/zeforgezenica/smetovi" 
+        target="_blank" 
+        class="flex items-center justify-center"
+      >
+        <span class="sr-only">Go to Astro's GitHub repo</span>
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" 
+          alt="GitHub" 
+          style="max-width: 32px; max-height: 32px;"
+        >
+      </a> 
+      -->
       <div class="block md:hidden" id="menu-button" style="cursor: pointer;">
         <i class="fa-solid fa-bars" style="font-size: 32px; position: relative; top:2px;"></i>
       </div>
@@ -93,38 +61,30 @@ const aboutUrl = lang === 'sr' ? '/about' : '/en/about';
   </nav>
 </header>
 
-<!-- Mobile Menu -->
 <div id="menu-container" class="hidden md:hidden">
-  <BurgerMenu client:load lang={lang} />
+  <BurgerMenu client:load />
 </div>
 
 <style>
   header {
-    z-index: 1010;
+      z-index: 1010;
   }
-  
   nav a, .weather {
     padding: 0 0.3em;
   }
-  
   .internal-links a {
     padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
     color: var(--black);
     border-bottom: 4px solid transparent;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     border-inline: 4px solid transparent;
     transition:
       border-bottom-color 0.3s ease-in-out, 
       border-inline-color 0.3s ease-in-out;
-    display: inline-block;
-    text-decoration: none;
-    white-space: nowrap;
+		display: inline-block;
+		text-decoration: none;
   }
-  
   .internal-links a:hover {
     border-bottom: 4px solid var(--pumpkin-orange);
     border-inline: 4px solid transparent;
@@ -132,32 +92,13 @@ const aboutUrl = lang === 'sr' ? '/about' : '/en/about';
       border-bottom-color 0.3s ease-in-out,
       border-inline-color 0.3s ease-in-out;
   }
-  
   .internal-links a.active {
-    font-weight: bolder;
-    border-bottom: 4px solid var(--pumpkin-orange) !important;
-    border-inline: 4px solid transparent !important;
-  }
-  
+		font-weight: bolder;
+		border-bottom: 4px solid var(--pumpkin-orange) !important;
+		border-inline: 4px solid transparent !important;
+	}
   #menu-button:hover {
     cursor: pointer;
     color: var(--pumpkin-orange);
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 1200px) {
-    .internal-links a {
-      font-size: 14px;
-      padding-left: 6px;
-      padding-right: 6px;
-    }
-  }
-  
-  @media (max-width: 1024px) {
-    .internal-links a {
-      font-size: 13px;
-      padding-left: 4px;
-      padding-right: 4px;
-    }
   }
 </style>
