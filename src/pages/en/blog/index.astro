@@ -1,0 +1,67 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import { getLangFromUrl } from '../../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+
+const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Translation map for your actual blog post titles
+const blogTranslations = {
+    'Završena sanacija i asfaltiranje puta prema sportsko-rekreativnom i turističkom centru Smetovi': 'Road Rehabilitation and Asphalting to Smetovi Sports-Recreational and Tourist Center Completed',
+    'Nastavak ulaganja u infrastrukturu za oživljavanje izletišta Smetovi': 'Continued Investment in Infrastructure for Revitalizing Smetovi Resort',
+    // Add more blog titles as they are created
+};
+
+function translateTitle(title: string): string {
+    return blogTranslations[title] || title;
+}
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+        <main class="pt-24">
+            <section>
+                <ul class="space-y-6">
+                    {
+                        posts.map((post) => (
+                            <li>
+                                <a href={`/en/blog/${post.slug}/`}>
+                                    <div class="organization flex flex-col md:flex-row w-4/5 mx-auto bg-white shadow-lg overflow-hidden">
+                                        <div class="org-image flex-none md:w-1/4 h-48 md:h-auto">
+                                            <img src={post.data.heroImage} alt="" class={"object-cover w-full h-full"}/>
+                                        </div>
+                                        <div class="org-content flex flex-col justify-center items-start flex-grow p-4">
+                                            <p class="date mb-0 text-gray-400">
+                                                <FormattedDate date={post.data.pubDate} />
+                                            </p>
+                                            <h4 class="title font-bold font-exo2 text-lg text-sky-950 sm:text-base md:text-xl lg:text-2xl xl:text-3xl">
+                                                {translateTitle(post.data.title)}
+                                            </h4>
+                                            <button class="bg-sky-950 px-6 py-2 text-white" style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));">
+                                                Read More
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>
