@@ -3,85 +3,211 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getLangFromUrl } from '../i18n/utils';
 
-type Props = CollectionEntry<'organization'>['data'];
+type Props = CollectionEntry<'organizations'>['data'] & {
+    lang?: string;
+};
 
-const { title, description, heroImage, type, workHours, phone, contact, mapUrl } = Astro.props;
+const { title, description, heroImage, type, workHours, phone, contact, mapUrl, lang: propLang } = Astro.props;
+
+// Detect language from URL or use passed lang prop
+const lang = propLang || getLangFromUrl(Astro.url);
+
+// Translation map for organization content
+const orgTranslations = {
+    // Organization titles
+    'Planinski dom': 'Mountain Lodge',
+    'Dom izviđača i radioamatera': 'Scout and Radio Amateur House',
+    
+    // Organization types
+    'Smještaj': 'Accommodation',
+    'Rekreacija': 'Recreation',
+    'Turizam': 'Tourism',
+    'Aktivnosti': 'Activities',
+    'Ugostiteljstvo': 'Hospitality',
+    'Sport': 'Sports',
+    'Kultura': 'Culture',
+    
+    // UI Labels
+    'Aktivnosti': 'Activities',
+    'Radno vrijeme': 'Working Hours',
+    'Telefon': 'Phone',
+    'Kontakt': 'Contact',
+    'Lokacija': 'Location',
+    'Prikaži na mapi': 'Show on Map',
+    
+    // Add more organization names and types as needed
+};
+
+function translateContent(text: string): string {
+    if (lang === 'en' && text && orgTranslations[text]) {
+        return orgTranslations[text];
+    }
+    return text || '';
+}
+
+// Get translated values
+const translatedTitle = translateContent(title);
+const translatedType = translateContent(type);
+const translatedDescription = translateContent(description);
+
+// Translate UI labels
+const uiLabels = {
+    activities: lang === 'en' ? 'Activities' : 'Aktivnosti',
+    workingHours: lang === 'en' ? 'Working Hours' : 'Radno vrijeme',
+    phone: lang === 'en' ? 'Phone' : 'Telefon',
+    contact: lang === 'en' ? 'Contact' : 'Kontakt',
+    location: lang === 'en' ? 'Location' : 'Lokacija',
+    showOnMap: lang === 'en' ? 'Show on Map' : 'Prikaži na mapi',
+    backToOrgs: lang === 'en' ? 'Back to Organizations' : 'Nazad na Organizacije',
+};
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: 100%;
-				margin: 0;
-			}
-			.image-container {
-				width: 100%;
-				height: 0;
-				top: 0;
-				padding-bottom: 47.41%; /* Aspect ratio */
-				position: absolute;
-			}
+<html lang={lang}>
+    <head>
+        <BaseHead title={translatedTitle} description={translatedDescription} />
+        <style>
+            main {
+                width: 100%;
+                margin: 0;
+            }
+            .image-container {
+                width: 100%;
+                height: 0;
+                top: 0;
+                padding-bottom: 47.41%; /* Aspect ratio */
+                position: absolute;
+            }
 
-			.hero-image {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				object-position: bottom; 
-				z-index: -1;
-				box-shadow: var(--box-shadow);
-				-webkit-mask-image: url('/OrgPost ImgMask21_10.svg');
-				-webkit-mask-size: cover;
-				-webkit-mask-repeat: no-repeat;
-				-webkit-mask-position: center;
-				mask-image: url('/OrgPost ImgMask21_10.svg');
-				mask-size: cover;
-				mask-repeat: no-repeat;
-				mask-position: center;
-			}
-			.prose {
+            .hero-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: bottom; 
+                z-index: -1;
+                box-shadow: var(--box-shadow);
+                -webkit-mask-image: url('/OrgPost ImgMask21_10.svg');
+                -webkit-mask-size: cover;
+                -webkit-mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                mask-image: url('/OrgPost ImgMask21_10.svg');
+                mask-size: cover;
+                mask-repeat: no-repeat;
+                mask-position: center;
+            }
+            .prose {
                 width: 720px;
                 max-width: calc(100% - 2em);
                 background-color: white;
                 margin: calc(30vw - 80px) auto 0;
                 padding: 3em;
                 color: rgb(var(--gray-dark));
-                box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5); /* Increased shadow spread */
+                box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5);
             }
-		</style>
-	</head>
 
-	<body class="">
-		<Header />
-		<main>
-			<div class="image-container">
-				<img src={heroImage} alt={title} class="hero-image" />
-			  </div>
-			  
-			<article>
-				<div class="prose">
-          			<div class="mb-4 text-left">
-						<div class="text-gray-500 font-atkinson mb-2">Aktivnosti / {type}</div>
-						<h1 class="text-3xl font-exo2  font-bold  mb-2">{title}</h1>
-						<div class="w-20 h-1 bg-orange-500 mb-4"></div>
-						<h2 class="text-lg font-atkinson text-gray-500">Radno vrijeme: {workHours}</h2>
-						<h2 class="text-lg font-atkinson text-gray-500">Telefon: {phone}</h2>
-						<h2 class="text-lg font-atkinson text-gray-500">Kontakt: {contact}</h2>
-						<h2 class="text-lg font-atkinson text-gray-500">
-							Lokacija: <a href={
-								mapUrl
-							} class="text-blue-500 underline">Prikaži na mapi</a>
-						</h2>
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+            /* Back button styling */
+            .back-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #1e40af;
+                text-decoration: none;
+                margin-bottom: 2rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                transition: background-color 0.2s ease;
+            }
+            
+            .back-link:hover {
+                background-color: #f3f4f6;
+            }
+            
+            .back-link i {
+                font-size: 0.875rem;
+            }
+
+            .info-item {
+                margin-bottom: 0.5rem;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .info-label {
+                font-weight: 600;
+                margin-right: 0.5rem;
+                min-width: 120px;
+            }
+        </style>
+    </head>
+
+    <body class="">
+        <Header />
+        <main>
+            <div class="image-container">
+                <img src={heroImage} alt={translatedTitle} class="hero-image" />
+            </div>
+              
+            <article>
+                <div class="prose">
+                    <!-- Back to Organizations link -->
+                    <a href={lang === 'sr' ? '/organizations' : '/en/organizations'} class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        {uiLabels.backToOrgs}
+                    </a>
+
+                    <div class="mb-4 text-left">
+                        <div class="text-gray-500 font-atkinson mb-2">
+                            {uiLabels.activities} / {translatedType}
+                        </div>
+                        <h1 class="text-3xl font-exo2 font-bold mb-2">{translatedTitle}</h1>
+                        <div class="w-20 h-1 bg-orange-500 mb-4"></div>
+                        
+                        <div class="organization-info">
+                            <div class="info-item">
+                                <span class="info-label text-lg font-atkinson text-gray-500">
+                                    {uiLabels.workingHours}:
+                                </span>
+                                <span class="text-lg font-atkinson text-gray-500">{workHours}</span>
+                            </div>
+
+                            {phone && (
+                                <div class="info-item">
+                                    <span class="info-label text-lg font-atkinson text-gray-500">
+                                        {uiLabels.phone}:
+                                    </span>
+                                    <span class="text-lg font-atkinson text-gray-500">{phone}</span>
+                                </div>
+                            )}
+
+                            {contact && (
+                                <div class="info-item">
+                                    <span class="info-label text-lg font-atkinson text-gray-500">
+                                        {uiLabels.contact}:
+                                    </span>
+                                    <span class="text-lg font-atkinson text-gray-500">{contact}</span>
+                                </div>
+                            )}
+
+                            {mapUrl && (
+                                <div class="info-item">
+                                    <span class="info-label text-lg font-atkinson text-gray-500">
+                                        {uiLabels.location}:
+                                    </span>
+                                    <a href={mapUrl} class="text-lg font-atkinson text-blue-500 underline hover:text-blue-700">
+                                        {uiLabels.showOnMap}
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <slot />
+                </div>
+            </article>
+        </main>
+        <Footer />
+    </body>
 </html>

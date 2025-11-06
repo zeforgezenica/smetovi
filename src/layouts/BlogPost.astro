@@ -4,85 +4,144 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getLangFromUrl } from '../i18n/utils';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+    lang?: string;
+};
 
-const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
+const { title, description, pubDate, heroImage, photoAuthor, lang: propLang } = Astro.props;
+
+// Detect language from URL or use passed lang prop
+const lang = propLang || getLangFromUrl(Astro.url);
+
+// Translation map for blog content
+const contentTranslations = {
+    // Blog titles
+    'Završena sanacija i asfaltiranje puta prema sportsko-rekreativnom i turističkom centru Smetovi': 'Road Rehabilitation and Asphalting to Smetovi Sports-Recreational and Tourist Center Completed',
+    'Nastavak ulaganja u infrastrukturu za oživljavanje izletišta Smetovi': 'Continued Investment in Infrastructure for Revitalizing Smetovi Resort',
+    'Projekat vrijedan oko 900.000 KM: Eko kuća Smetovi otvara vrata mladima': '900,000 KM Project: Smetovi Eco House Opens Its Doors to Youth',
+    
+    // Authors/Sources
+    'Zenicainfo': 'Zenica Info',
+    'Press služba ZDK': 'ZDK Press Service',
+    'Fuad Kasumović': 'Fuad Kasumović',
+    
+    // Add more authors as needed
+    'Redakcija': 'Editorial Team',
+    'Admin': 'Administrator',
+};
+
+function translateContent(text: string): string {
+    if (lang === 'en' && text && contentTranslations[text]) {
+        return contentTranslations[text];
+    }
+    return text || '';
+}
+
+// Get translated values
+const translatedTitle = translateContent(title);
+const translatedAuthor = translateContent(photoAuthor);
+const translatedDescription = translateContent(description);
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			.image-container {
-				width: 100%;
-				height: 0;
-				top: 0;
-				padding-bottom: 67.97%; /* Aspect ratio */
-				position: absolute;
-			}
+<html lang={lang}>
+    <head>
+        <BaseHead title={translatedTitle} description={translatedDescription} />
+        <style>
+            .image-container {
+                width: 100%;
+                height: 0;
+                top: 0;
+                padding-bottom: 67.97%; /* Aspect ratio */
+                position: absolute;
+            }
 
-			.hero-image {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				object-position: bottom; 
-				z-index: -1; 
-				box-shadow: var(--box-shadow);
-				-webkit-mask-image: url('/BlogPost ImgMask.svg');
-				-webkit-mask-size: cover;
-				-webkit-mask-repeat: no-repeat;
-				-webkit-mask-position: center;
-				mask-image: url('/BlogPost ImgMask.svg');
-				mask-size: cover;
-				mask-repeat: no-repeat;
-				mask-position: center;
-			}
-			.prose {
+            .hero-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: bottom; 
+                z-index: -1; 
+                box-shadow: var(--box-shadow);
+                -webkit-mask-image: url('/BlogPost ImgMask.svg');
+                -webkit-mask-size: cover;
+                -webkit-mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                mask-image: url('/BlogPost ImgMask.svg');
+                mask-size: cover;
+                mask-repeat: no-repeat;
+                mask-position: center;
+            }
+            
+            .prose {
                 width: 720px;
                 max-width: calc(100% - 2em);
                 background-color: white;
                 margin: calc(30vw - 80px) auto 0;
                 padding: 3em;
                 color: rgb(var(--gray-dark));
-                box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5); /* Increased shadow spread */
+                box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5);
                 flex-grow: 1; 
                 min-height: calc(100vh - 64px); 
-				overflow: visible;
+                overflow: visible;
             }
-		</style>
-	</head>
 
-	<body class="font-sans">
-		<Header />
-		<main class="w-full m-0">
-			<div class="image-container">
-				<img src={heroImage} alt={title} class="hero-image" />
-			</div>
-			  
-			<article>
-				<div class="prose">
-          			<div class="title mb-4">
-						<div class="date font-atkinson text-gray-500 mb-2">
-							{
-								pubDate && (
-									<div class="last-updated-on">
-										<FormattedDate date={pubDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1 class="text-3xl font-exo2 font-bold mb-2">{title}</h1>
-						<div class="ttl-sep w-20 h-1 bg-orange-500 my-2"></div>
-						<h2 class="photo-author font-atkinson text-gray-500 text-lg">{photoAuthor}</h2>
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+            /* Add back button styling */
+            .back-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #1e40af;
+                text-decoration: none;
+                margin-bottom: 2rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                transition: background-color 0.2s ease;
+            }
+            
+            .back-link:hover {
+                background-color: #f3f4f6;
+            }
+            
+            .back-link i {
+                font-size: 0.875rem;
+            }
+        </style>
+    </head>
+
+    <body class="font-sans">
+        <Header />
+        <main class="w-full m-0">
+            <div class="image-container">
+                <img src={heroImage} alt={translatedTitle} class="hero-image" />
+            </div>
+              
+            <article>
+                <div class="prose">
+                    <div class="title mb-4">
+                        <div class="date font-atkinson text-gray-500 mb-2">
+                            {
+                                pubDate && (
+                                    <div class="last-updated-on">
+                                        <FormattedDate date={pubDate} />
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <h1 class="text-3xl font-exo2 font-bold mb-2">{translatedTitle}</h1>
+                        <div class="ttl-sep w-20 h-1 bg-orange-500 my-2"></div>
+                        {translatedAuthor && (
+                            <h2 class="photo-author font-atkinson text-gray-500 text-lg">{translatedAuthor}</h2>
+                        )}
+                    </div>
+                    <slot />
+                </div>
+            </article>
+        </main>
+        <Footer />
+    </body>
 </html>
