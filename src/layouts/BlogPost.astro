@@ -40,7 +40,7 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
 <style>
   .image-container {
     width: 100%;
-    height: 70vh; /* banner height */
+    height: 70vh;
     position: relative;
     overflow: hidden;
   }
@@ -48,8 +48,8 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
   .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* full width, cover look */
-    object-position: center; /* center focus */
+    object-fit: cover;
+    object-position: center;
     display: block;
   }
 
@@ -57,7 +57,7 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
     width: 720px;
     max-width: calc(100% - 2em);
     background-color: white;
-    margin: 2em auto 0; 
+    margin: 2em auto 0;
     padding: 3em;
     color: rgb(var(--gray-dark));
     box-shadow:
@@ -72,11 +72,11 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
   }
 
   .title {
-    text-align: center;
+    text-align: left;
   }
 
   .photo-author {
-    text-align: center;
+    text-align: left;
   }
 
   @media (max-width: 768px) {
