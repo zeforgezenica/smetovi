@@ -19,7 +19,7 @@ const organization = defineCollection({
     type: z.string(), // Allows flexibility for different organization types
     workHours: z.string(),
     phone: z.string(),
-    contact: z.string(),
+    contact: z.string().optional(),
     description: z.string(),
     heroImage: z.string().optional(),
     location: z.object({
@@ -27,6 +27,10 @@ const organization = defineCollection({
       lng: z.number(),
     }),
     mapUrl: z.string(),
+    instagram: z.string().optional(),
+    instagramUrl: z.string().optional(),
+    booking: z.string().optional(),
+    bookingUrl: z.string().optional(),
   }),
 });
 

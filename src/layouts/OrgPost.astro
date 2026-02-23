@@ -16,6 +16,10 @@ const {
   phone,
   contact,
   mapUrl,
+  instagram,
+  instagramUrl,
+  booking,
+  bookingUrl,
 } = Astro.props;
 ---
 
@@ -39,9 +43,21 @@ const {
           <h2 class="text-lg font-atkinson text-gray-500">
             Telefon: {phone}
           </h2>
-          <h2 class="text-lg font-atkinson text-gray-500">
-            Kontakt: {contact}
-          </h2>
+          {contact && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Kontakt: {contact}
+            </h2>
+          )}
+          {instagram && instagramUrl && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Instagram: <a href={instagramUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{instagram}</a>
+            </h2>
+          )}
+          {booking && bookingUrl && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Booking: <a href={bookingUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{booking}</a>
+            </h2>
+          )}
           <h2 class="text-lg font-atkinson text-gray-500">
             Lokacija: <a href={mapUrl} class="text-blue-500 underline"
               >Prikaži na mapi</a
@@ -74,7 +90,7 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
     z-index: -1;
     box-shadow: var(--box-shadow);
     -webkit-mask-image: url("/OrgPost ImgMask21_10.svg");
