@@ -16,6 +16,8 @@ const {
   phone,
   contact,
   mapUrl,
+  facebook,
+  facebookUrl,
   instagram,
   instagramUrl,
   booking,
@@ -46,6 +48,11 @@ const {
           {contact && (
             <h2 class="text-lg font-atkinson text-gray-500">
               Kontakt: {contact}
+            </h2>
+          )}
+          {facebook && facebookUrl && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Facebook: <a href={facebookUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{facebook}</a>
             </h2>
           )}
           {instagram && instagramUrl && (
