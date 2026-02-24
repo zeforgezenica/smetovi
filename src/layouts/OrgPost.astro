@@ -16,6 +16,10 @@ const {
   phone,
   contact,
   mapUrl,
+  facebook,
+  facebookUrl,
+  instagram,
+  instagramUrl,
 } = Astro.props;
 ---
 
@@ -39,9 +43,21 @@ const {
           <h2 class="text-lg font-atkinson text-gray-500">
             Telefon: {phone}
           </h2>
-          <h2 class="text-lg font-atkinson text-gray-500">
-            Kontakt: {contact}
-          </h2>
+          {contact && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Kontakt: {contact}
+            </h2>
+          )}
+          {facebook && facebookUrl && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Facebook: <a href={facebookUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{facebook}</a>
+            </h2>
+          )}
+          {instagram && instagramUrl && (
+            <h2 class="text-lg font-atkinson text-gray-500">
+              Instagram: <a href={instagramUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{instagram}</a>
+            </h2>
+          )}
           <h2 class="text-lg font-atkinson text-gray-500">
             Lokacija: <a href={mapUrl} class="text-blue-500 underline"
               >Prikaži na mapi</a
