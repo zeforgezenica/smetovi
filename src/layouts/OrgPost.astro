@@ -1,22 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import PageLayout from "./PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
 
 type Props = CollectionEntry<"organization">["data"];
+const { title, description, heroImage, type, workHours, phone, contact, mapUrl } = Astro.props;
 
-const {
-  title,
-  description,
-  heroImage,
-  type,
-  workHours,
-  phone,
-  contact,
-  mapUrl,
-} = Astro.props;
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <PageLayout siteTitle={title} siteDescription={description}>
@@ -24,28 +16,19 @@ const {
     <div class="image-container">
       <img src={heroImage} alt={title} class="hero-image" />
     </div>
-
     <article>
       <div class="prose">
         <div class="mb-4 text-left">
-          <div class="text-gray-500 font-atkinson mb-2">
-            Aktivnosti / {type}
-          </div>
+          <div class="text-gray-500 font-atkinson mb-2">{tr.organizations.type_prefix} / {type}</div>
           <h1 class="text-3xl font-exo2 font-bold mb-2">{title}</h1>
           <div class="w-20 h-1 bg-orange-500 mb-4"></div>
+          <h2 class="text-lg font-atkinson text-gray-500">{tr.organizations.work_hours}: {workHours}</h2>
+          <h2 class="text-lg font-atkinson text-gray-500">{tr.organizations.phone}: {phone}</h2>
           <h2 class="text-lg font-atkinson text-gray-500">
-            Radno vrijeme: {workHours}
+            {tr.organizations.contact}: <a href={contact} class="text-blue-500 underline">{contact}</a>
           </h2>
           <h2 class="text-lg font-atkinson text-gray-500">
-            Telefon: {phone}
-          </h2>
-          <h2 class="text-lg font-atkinson text-gray-500">
-            Kontakt: {contact}
-          </h2>
-          <h2 class="text-lg font-atkinson text-gray-500">
-            Lokacija: <a href={mapUrl} class="text-blue-500 underline"
-              >Prikaži na mapi</a
-            >
+            {tr.organizations.location}: <a href={mapUrl} class="text-blue-500 underline">{tr.organizations.show_on_map}</a>
           </h2>
         </div>
         <slot />
@@ -55,46 +38,20 @@ const {
 </PageLayout>
 
 <style>
-  main {
-    width: 100%;
-    margin: 0;
-  }
-  .image-container {
-    width: 100%;
-    height: 0;
-    top: 0;
-    padding-bottom: 47.41%; /* Aspect ratio */
-    position: absolute;
-  }
-
+  main { width: 100%; margin: 0; }
+  .image-container { width: 100%; height: 0; top: 0; padding-bottom: 47.41%; position: absolute; }
   .hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: bottom;
-    z-index: -1;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: bottom; z-index: -1;
     box-shadow: var(--box-shadow);
     -webkit-mask-image: url("/OrgPost ImgMask21_10.svg");
-    -webkit-mask-size: cover;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
+    -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
     mask-image: url("/OrgPost ImgMask21_10.svg");
-    mask-size: cover;
-    mask-repeat: no-repeat;
-    mask-position: center;
+    mask-size: cover; mask-repeat: no-repeat; mask-position: center;
   }
   .prose {
-    width: 720px;
-    max-width: calc(100% - 2em);
-    background-color: white;
-    margin: calc(30vw - 80px) auto 0;
-    padding: 3em;
-    color: rgb(var(--gray-dark));
-    box-shadow:
-      0 0 50px rgba(150, 150, 150, 0.5),
-      0 0 50px rgba(150, 150, 150, 0.5); /* Increased shadow spread */
+    width: 720px; max-width: calc(100% - 2em); background-color: white;
+    margin: calc(30vw - 80px) auto 0; padding: 3em; color: rgb(var(--gray-dark));
+    box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5);
   }
 </style>

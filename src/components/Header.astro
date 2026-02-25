@@ -2,7 +2,13 @@
 import HeaderLink from './HeaderLink.astro';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import Weather from './WeatherComponent/WeatherComponent.tsx';
+import LanguageSwitcher from './LanguageSwitcher.tsx';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { getLangFromCookie } from '../i18n/server';
+import { t, type Lang } from "../i18n";
+
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <script is:inline>
@@ -14,9 +20,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
       const isHidden = menuContainer.classList.contains('hidden');
       const icon = menuButton.querySelector('i');
       if (icon) {
-        icon.className = isHidden
-        ? 'fa-solid fa-bars'
-        : 'fa-solid fa-xmark';
+        icon.className = isHidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
       }
     });
   });
@@ -26,35 +30,21 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
   <nav class="flex items-center justify-around h-full w-full flex items-center p-0">
     <a href="/"><img id="navbar-logo" src="/smetovi-logo.png" alt="Smetovi Logo" class="p-2 w-35vw md:w-20vw lg:w-64"></a>
     <div class="internal-links hidden md:block">
-      <HeaderLink href="/map">Mapa</HeaderLink>
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Vijesti</HeaderLink>
-      <HeaderLink href="/organizations">Organizacije</HeaderLink>
-      <HeaderLink href="/events">Događaji</HeaderLink>
-      <HeaderLink href="/contact">Kontakt</HeaderLink>
-      <HeaderLink href="/Images">Slike</HeaderLink>
-      <!-- <HeaderLink href="/recenzije">Recenzije</HeaderLink> -->
+      <HeaderLink href="/map">{tr.nav.map}</HeaderLink>
+      <HeaderLink href="/">{tr.nav.home}</HeaderLink>
+      <HeaderLink href="/blog">{tr.nav.news}</HeaderLink>
+      <HeaderLink href="/organizations">{tr.nav.organizations}</HeaderLink>
+      <HeaderLink href="/events">{tr.nav.events}</HeaderLink>
+      <HeaderLink href="/contact">{tr.nav.contact}</HeaderLink>
+      <HeaderLink href="/Images">{tr.nav.images}</HeaderLink>
     </div>
-    <div class="flex">
+    <div class="flex items-center gap-2">
       <div class="weather flex flex-col justify-center items-center mr-2">
         <HeaderLink href="/weather">
           <Weather client:load/>
         </HeaderLink>
-      </div>  
-      <!-- Move this to contact page and footer pls
-      <a 
-        href="https://github.com/zeforgezenica/smetovi" 
-        target="_blank" 
-        class="flex items-center justify-center"
-      >
-        <span class="sr-only">Go to Astro's GitHub repo</span>
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" 
-          alt="GitHub" 
-          style="max-width: 32px; max-height: 32px;"
-        >
-      </a> 
-      -->
+      </div>
+      <LanguageSwitcher client:load />
       <div class="block md:hidden" id="menu-button" style="cursor: pointer;">
         <i class="fa-solid fa-bars" style="font-size: 32px; position: relative; top:2px;"></i>
       </div>
@@ -63,16 +53,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 </header>
 
 <div id="menu-container" class="hidden md:hidden">
-  <BurgerMenu client:load />
+  <BurgerMenu client:load lang={lang} />
 </div>
 
 <style>
-  header {
-      z-index: 1010;
-  }
-  nav a, .weather {
-    padding: 0 0.3em;
-  }
+  header { z-index: 1010; }
+  nav a, .weather { padding: 0 0.3em; }
   .internal-links a {
     padding-bottom: 5px;
     color: var(--black);
@@ -80,26 +66,17 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
     text-decoration: none;
     font-size: 18px;
     border-inline: 4px solid transparent;
-    transition:
-      border-bottom-color 0.3s ease-in-out, 
-      border-inline-color 0.3s ease-in-out;
-		display: inline-block;
-		text-decoration: none;
+    transition: border-bottom-color 0.3s ease-in-out, border-inline-color 0.3s ease-in-out;
+    display: inline-block;
   }
   .internal-links a:hover {
     border-bottom: 4px solid var(--pumpkin-orange);
     border-inline: 4px solid transparent;
-    transition:
-      border-bottom-color 0.3s ease-in-out,
-      border-inline-color 0.3s ease-in-out;
   }
   .internal-links a.active {
-		font-weight: bolder;
-		border-bottom: 4px solid var(--pumpkin-orange) !important;
-		border-inline: 4px solid transparent !important;
-	}
-  #menu-button:hover {
-    cursor: pointer;
-    color: var(--pumpkin-orange);
+    font-weight: bolder;
+    border-bottom: 4px solid var(--pumpkin-orange) !important;
+    border-inline: 4px solid transparent !important;
   }
+  #menu-button:hover { cursor: pointer; color: var(--pumpkin-orange); }
 </style>

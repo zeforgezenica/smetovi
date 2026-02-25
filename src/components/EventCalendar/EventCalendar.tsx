@@ -3,9 +3,11 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import bsLocale from '@fullcalendar/core/locales/bs'
 import EventModal from './EventModal'
+import type {EventClickArg} from "@fullcalendar/core"
 
 interface Event {
   data: {
+      datetime: string;
     title: string;
     description: string;
     date: string;
@@ -13,24 +15,32 @@ interface Event {
   };
 }
 
-export default function EventCalendar({events}) {
+interface SelectedEvent {
+  title: string;
+  description: string;
+  location: string;
+  date: string | undefined;
+  time: string | undefined;
+}
+
+export default function EventCalendar({events} : {events: Event[]}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null);
 
     const calendarEvents = events.map(event => ({
         title: event.data.title,
-        date: new Date(event.data.datetime),
+        date: event.data.datetime,
         extendedProps: {
             description: event.data.description,
             location: event.data.location,
         }
     }));
 
-    const handleEventClick = (clickInfo) => {
+    const handleEventClick = (clickInfo: EventClickArg) => {
         setSelectedEvent({
             title: clickInfo.event.title,
-            description: clickInfo.event.extendedProps.description,
-            location: clickInfo.event.extendedProps.location,
+            description: clickInfo.event.extendedProps?.description,
+            location: clickInfo.event.extendedProps?.location,
             date: clickInfo.event.start?.toLocaleDateString(),
             time: clickInfo.event.start?.toLocaleTimeString(),
         });
