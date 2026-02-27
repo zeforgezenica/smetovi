@@ -9,7 +9,9 @@ instagram: "@gss_zenica_"
 instagramUrl: "https://www.instagram.com/gss_zenica_/?hl=en"
 description: "Gorska služba spašavanja Zenica (GSS Zenica) je dobrovoljna, humanitarna i nestranačka organizacija koja djeluje na području grada Zenica i šire regije."
 heroImage: "/images/organizations/gsszenica/gss.jpg"
-location: [44.2449508, 17.9780709]
+location:
+  lat: 44.2449508
+  lng: 17.9780709
 mapUrl: "https://www.google.com/maps/place/Mountain+Rescue+Service+Zenica/@44.2449508,17.9780709,17z/data=!4m14!1m7!3m6!1s0x475ee7f12e177613:0x4f425cdcec3162a7!2sMountain+Rescue+Service+Zenica!8m2!3d44.2449508!4d17.9780709!16s%2Fg%2F11mxz868h7!3m5!1s0x475ee7f12e177613:0x4f425cdcec3162a7!8m2!3d44.2449508!4d17.9780709!16s%2Fg%2F11mxz868h7?entry=ttu&g_ep=EgoyMDI2MDIyMi4wIKXMDSoASAFQAw%3D%3D"
 ---
 
