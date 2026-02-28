@@ -4,100 +4,213 @@ import Footer from "../components/Footer.astro";
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getWeatherIcon } from "../components/WeatherComponent/weatherIconMap";
+
+// 1. DEFINISANJE TIPOVA
+interface WeatherData {
+    temp: number;
+    code: number;
+    wind: number;
+    humidity: number;
+    precip: number;
+    dateStr: string;
+    isDay: boolean;
+}
+
+interface HourlyForecast {
+    time: string;
+    temp: number;
+    code: number;
+}
+
+const lat = 44.2447;
+const lon = 17.9781;
+// DODANO: &timezone=auto osigurava da currentHour odgovara lokaciji Smetova
+const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode,relative_humidity_2m,precipitation_probability&timezone=auto&forecast_days=1`;
+
+// 2. OPISI
+const weatherDescriptions: Record<number, string> = {
+    0: "Vedro", 1: "Pretežno vedro", 2: "Djelimično oblačno", 3: "Oblačno",
+    45: "Magla", 48: "Inje / Magla", 51: "Blaga rosulja", 53: "Rosulja", 55: "Jaka rosulja",
+    56: "Ledena rosulja", 61: "Slaba kiša", 63: "Umjerena kiša", 65: "Jaka kiša",
+    66: "Ledena kiša", 71: "Slab snijeg", 73: "Snijeg", 75: "Jak snijeg",
+    77: "Zrnast snijeg", 80: "Pljuskovi kiše", 81: "Jaki pljuskovi",
+    85: "Pljusak snijega", 95: "Grmljavina", 96: "Grmljavina sa gradom"
+};
+
+let weatherData: WeatherData | null = null;
+let hourlyForecast: HourlyForecast[] = [];
+let error = false;
+let showWarning = false;
+let warningMessage = "";
+let isDifficult = false;
+
+try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error("Mreža nije dostupna");
+
+    const data: any = await response.json();
+    const currentHour = new Date().getHours();
+
+    weatherData = {
+        temp: Math.round(data.current_weather.temperature),
+        code: data.current_weather.weathercode,
+        wind: Math.round(data.current_weather.windspeed),
+        isDay: data.current_weather.is_day === 1,
+        humidity: data.hourly.relative_humidity_2m[currentHour],
+        precip: data.hourly.precipitation_probability[currentHour],
+        dateStr: new Date().toLocaleDateString('bs-BA', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' })
+    };
+
+    // LOGIKA PROVJERE ZA SNIJEG I LED
+    const snowCodes = [71, 73, 75, 77, 85, 86];
+    const iceCodes = [56, 57, 66, 67];
+
+    const isSnowing = snowCodes.includes(weatherData.code);
+    const hasIceRisk = iceCodes.includes(weatherData.code) || weatherData.temp <= 0;
+
+    if (hasIceRisk || isSnowing) {
+        showWarning = true;
+        warningMessage = isSnowing ? "Upozorenje: Snježne padavine na dionici" : "Žuto upozorenje: Moguća poledica i mraz";
+    }
+
+    // FINALNA LOGIKA ZA PROHODNOST (Koristimo je u HTML-u ispod)
+    isDifficult = isSnowing || (weatherData.temp <= -1 && weatherData.precip > 20);
+
+    hourlyForecast = data.hourly.time.slice(currentHour, currentHour + 7).map((t: string, i: number) => ({
+        time: t.split('T')[1],
+        temp: Math.round(data.hourly.temperature_2m[currentHour + i]),
+        code: data.hourly.weathercode[currentHour + i]
+    }));
+} catch (e) {
+    console.error("Greška pri dohvatu vremena:", e);
+    error = true;
+}
+
+// POPRAVLJENA FUNKCIJA: Sada koristi weatherDescriptions definisan gore
+function getWeatherDesc(code: number): string {
+    return weatherDescriptions[code] || "Promjenjivo";
+}
 ---
 
 <!doctype html>
-<html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    </head>
-    <body>
-        <Header />
-        <main class="flex flex-col md:flex-row justify-center w-[90%] lg:w-[85%] mx-auto mt-24">
-            <div class="w-full flex flex-col">
-                <div class="flex flex-col mb-8"> 
-                    <div class="flex w-full bg-[#FEC84D] pt-2 pl-3 pb-1 mb-2">
-                        <i class="fa fa-exclamation-triangle pr-2"></i>
-                        <div class="font-bold"> Žuto upozorenje za snijeg/led </div>
-                    </div>
-                    <div class="flex h-11">
-                        <div class="flex w-full pt-2 pl-3 pb-1 pr-2 shadow-[0_0_15px_rgba(0,0,0,0.15)]">
-                            <div class="grow font-semibold"> Automobilska cesta </div>
-                            <div class="font-bold"> Prohodna </div>
+<html lang="bs">
+<head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<body class="bg-gray-50">
+<Header />
+<main class="flex flex-col md:flex-row justify-center w-[90%] lg:w-[85%] mx-auto mt-24 gap-6">
+    <div class="w-full flex flex-col">
+
+        <div class="flex flex-col mb-8 text-black">
+            {showWarning && (
+                    <div class="flex w-full bg-[#FEC84D] pt-2 pl-3 pb-1 mb-2 rounded-t-lg animate-pulse">
+                        <i class="fa fa-exclamation-triangle pr-2 self-center"></i>
+                        <div class="font-bold uppercase text-sm tracking-wide">
+                            {warningMessage}
                         </div>
-                        <div class="bg-green-600 w-1 h-full"></div>
+                    </div>
+            )}
+
+            <div class="flex h-12 shadow-sm">
+                <div class="flex grow items-center px-4 bg-white rounded-l-lg border-y border-l border-gray-200">
+                    <div class="grow font-semibold text-gray-700"> Smetovski put: Automobilska cesta </div>
+                    <div class={`font-bold px-2 ${isDifficult ? 'text-orange-600' : 'text-green-600'}`}>
+                        {isDifficult ? 'OTEŽANO' : 'PROHODNA'}
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row justify-center">
-                <section class="weather-section weather-info w-full md:w-1/2 box-border h-100 m-3">
-                        <div class="flex flex-col">
-                            <div class="flex mb-8">
-                                <div class="grow text-6xl font-bold"> 1°C </div>
-                                <div class="flex flex-col">
-                                    <div class="font-bold"> Smetovi </div>
-                                    <div> Srijeda, 25.12.2024. </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col mb-20">
-                                <div class="ml-auto mr-auto mb-8">
-                                    <img src={getWeatherIcon(0)} alt="Weather Icon" class="w-[200px] h-[200px]">
-                                </div>
-                                <div class="flex justify-between ml-20 mr-20">
-                                    <div class="flex flex-col">
-                                        <div> Padavine </div>
-                                        <div class="ml-auto mr-auto"> <span class="font-bold text-3xl">65</span>% </div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div> Vlažnost </div>
-                                        <div class="ml-auto mr-auto"> <span class="font-bold text-3xl">82</span>% </div>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <div> Vjetar </div>
-                                        <div class="ml-auto mr-auto"> <span class="font-bold text-3xl">11</span>km/h </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="flex mb-4">
-                                    <div class="grow font-bold text-lg"> Danas </div>
-                                    <div class="text-base"> Vrijeme za narednih 7 dana </div>
-                                </div>
-                                <div class="flex overflow-x-auto space-x-2 p-2">
-                                    {
-                                        Array.from({length: 7}).map((_, i) => (
-                                            <div class="flex flex-col justify-between shadow-2xl shadow-gray-300 min-w-[90px] h-[120px]">
-                                                <div class="text-lg pt-2 pl-2"> 1°C </div>
-                                                <div class="ml-auto mr-auto mb-2 mt-1">
-                                                    <img src={getWeatherIcon(0)} alt="Weather Icon" class="h-[36px] w-[36px]">
-                                                </div>
-                                                <div class="ml-auto mr-auto text-base"> {15+i}:00 </div>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="flex flex-col weather-section live-camera w-full md:w-1/2 box-border h-100 m-3">
-                        <div class="font-bold"> Live Kamere </div>
-                        <div class="border h-[250px] flex flex-col justify-center items-center mb-4 mt-4">
-                            <div>
-                                <i class="fa-solid fa-video mx-4"></i>
-                                <div>Uskoro</div> 
-                            </div>
-                        </div>
-                        <div class="text-gray-700 text-base"> Lokacija</div>
-                        <div class="border h-[250px] flex flex-col justify-center items-center mb-4 mt-4">
-                            <div>
-                                <i class="fa-solid fa-video mx-4"></i>
-                                <div>Uskoro</div> 
-                            </div>
-                        </div>
-                        <div class="text-gray-700 text-base"> Lokacija</div>
-                    </section>
-                </div>
+                <div class={`${isDifficult ? 'bg-orange-500' : 'bg-green-600'} w-2 h-full rounded-r-lg`}></div>
             </div>
-        </main>
-        <Footer />
-    </body>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+
+            <section class="weather-section bg-white p-6 rounded-3xl border border-gray-100 shadow-sm w-full md:w-1/2">
+                {error || !weatherData ? (
+                        <div class="text-red-500 font-medium">Trenutno nije moguće dohvatiti podatke o vremenu.</div>
+                ) : (
+                        <div class="flex flex-col">
+                            <div class="flex mb-8 items-start">
+                                <div class="grow text-6xl font-black text-gray-900 tracking-tighter">{weatherData.temp}°C</div>
+                                <div class="flex flex-col text-right">
+                                    <div class="font-bold text-orange-500 capitalize">{getWeatherDesc(weatherData.code)}</div>
+                                    <div class="text-xs text-gray-400 font-medium">{weatherData.dateStr}</div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col mb-16">
+                                <div class="mx-auto mb-8 drop-shadow-xl transform hover:scale-105 transition-transform">
+                                    <img src={getWeatherIcon(weatherData.code)} alt="Weather Icon" class={`w-44 h-44 object-contain ${!weatherData.isDay ? 'brightness-75' : ''}`} />
+                                </div>
+                                <div class="flex justify-around bg-blue-50/50 py-6 rounded-2xl border border-blue-100/50">
+                                    <div class="text-center">
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Padavine</p>
+                                        <p class="text-2xl font-black text-gray-800">{weatherData.precip}%</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Vlažnost</p>
+                                        <p class="text-2xl font-black text-gray-800">{weatherData.humidity}%</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Vjetar</p>
+                                        <p class="text-2xl font-black text-gray-800">{weatherData.wind}<span class="text-xs font-normal ml-0.5 text-gray-500">km/h</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-bold text-gray-800">Danas</h3>
+                                    <span class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter bg-blue-50 px-2 py-1 rounded">Prognoza po satima</span>
+                                </div>
+                                <div class="flex overflow-x-auto space-x-3 pb-4 no-scrollbar">
+                                    {hourlyForecast.map((h) => (
+                                            <div class="flex flex-col justify-between items-center min-w-[95px] h-[120px] bg-white border border-gray-100 rounded-2xl p-3 shadow-sm hover:border-blue-300 hover:shadow-md transition-all">
+                                                <span class="font-bold text-gray-700 text-lg">{h.temp}°C</span>
+                                                <img src={getWeatherIcon(h.code)} class="h-9 w-9" alt="hour icon" />
+                                                <span class="text-[10px] text-gray-400 font-bold">{h.time}</span>
+                                            </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                )}
+            </section>
+
+            <section class="flex flex-col w-full md:w-1/2 gap-4">
+                <h3 class="font-bold text-lg px-2 text-gray-800">Live Kamere</h3>
+
+                <div class="bg-white p-3 rounded-3xl border border-gray-100 shadow-sm group cursor-pointer">
+                    <div class="bg-gray-900 aspect-3 rounded-2xl flex flex-col justify-center items-center text-white mb-3 overflow-hidden relative">
+                        <i class="fa-solid fa-circle-play text-4xl mb-2 opacity-30 group-hover:opacity-60 transition-opacity"></i>
+                        <span class="text-[10px] tracking-widest opacity-50 uppercase font-bold">Kamera Uživo - Uskoro</span>
+                    </div>
+                    <div class="px-2 py-1 flex items-center gap-2 text-sm text-gray-600">
+                        <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+                        <span class="font-medium italic">M-17: Izlaz Zenica Sjever</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-3 rounded-3xl border border-gray-100 shadow-sm group cursor-pointer">
+                    <div class="bg-gray-900 aspect-3 rounded-2xl flex flex-col justify-center items-center text-white mb-3 overflow-hidden relative">
+                        <i class="fa-solid fa-circle-play text-4xl mb-2 opacity-30 group-hover:opacity-60 transition-opacity"></i>
+                        <span class="text-[10px] tracking-widest opacity-50 uppercase font-bold">Kamera Uživo - Uskoro</span>
+                    </div>
+                    <div class="px-2 py-1 flex items-center gap-2 text-sm text-gray-600">
+                        <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                        <span class="font-medium italic">Planinski prevoj: Smetovi</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</main>
+<Footer />
+</body>
 </html>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
