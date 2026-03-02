@@ -1,12 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import PageLayout from "./PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
 
 type Props = CollectionEntry<"organization">["data"];
-
 const {
   title,
   description,
@@ -16,7 +14,14 @@ const {
   phone,
   contact,
   mapUrl,
+  facebook,
+  facebookUrl,
+  instagram,
+  instagramUrl,
 } = Astro.props;
+
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <PageLayout siteTitle={title} siteDescription={description}>
@@ -24,24 +29,66 @@ const {
     <div class="image-container">
       <img src={heroImage} alt={title} class="hero-image" />
     </div>
-
     <article>
       <div class="prose">
         <div class="mb-4 text-left">
           <div class="text-gray-500 font-atkinson mb-2">
-            Aktivnosti / {type}
+            {tr.organizations.type_prefix} / {type}
           </div>
           <h1 class="text-3xl font-exo2 font-bold mb-2">{title}</h1>
           <div class="w-20 h-1 bg-orange-500 mb-4"></div>
           <h2 class="text-lg font-atkinson text-gray-500">
-            Radno vrijeme: {workHours}
+            {tr.organizations.work_hours}: {workHours}
+          </h2>
+          <h2 class="text-lg font-atkinson text-gray-500">
+            {tr.organizations.phone}: {phone}
+          </h2>
+          <h2 class="text-lg font-atkinson text-gray-500">
+            {tr.organizations.contact}: <a
+              href={contact}
+              class="text-blue-500 underline">{contact}</a
+            >
           </h2>
           <h2 class="text-lg font-atkinson text-gray-500">
             Telefon: {phone}
           </h2>
-          <h2 class="text-lg font-atkinson text-gray-500">
-            Kontakt: {contact}
-          </h2>
+          {
+            contact && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Kontakt: {contact}
+              </h2>
+            )
+          }
+          {
+            facebook && facebookUrl && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Facebook:{" "}
+                <a
+                  href={facebookUrl}
+                  class="text-blue-500 underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {facebook}
+                </a>
+              </h2>
+            )
+          }
+          {
+            instagram && instagramUrl && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Instagram:{" "}
+                <a
+                  href={instagramUrl}
+                  class="text-blue-500 underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {instagram}
+                </a>
+              </h2>
+            )
+          }
           <h2 class="text-lg font-atkinson text-gray-500">
             Lokacija: <a href={mapUrl} class="text-blue-500 underline"
               >Prikaži na mapi</a
@@ -63,10 +110,9 @@ const {
     width: 100%;
     height: 0;
     top: 0;
-    padding-bottom: 47.41%; /* Aspect ratio */
+    padding-bottom: 47.41%;
     position: absolute;
   }
-
   .hero-image {
     position: absolute;
     top: 0;
@@ -74,7 +120,7 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
     z-index: -1;
     box-shadow: var(--box-shadow);
     -webkit-mask-image: url("/OrgPost ImgMask21_10.svg");
@@ -95,6 +141,6 @@ const {
     color: rgb(var(--gray-dark));
     box-shadow:
       0 0 50px rgba(150, 150, 150, 0.5),
-      0 0 50px rgba(150, 150, 150, 0.5); /* Increased shadow spread */
+      0 0 50px rgba(150, 150, 150, 0.5);
   }
 </style>

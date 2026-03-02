@@ -1,86 +1,56 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
+
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <PageLayout>
   <main id="main" class="landing-background">
-    <img id="logo" src="/smetovi-logo.png" alt="" srcset="" />
+    <img id="logo" src="/smetovi-logo.png" alt={tr.index.hero_alt} srcset="" />
   </main>
   <!-- Monument -->
   <div class="flex max-sm:flex-col lg:h-screen overflow-hidden observed">
     <div class="relative w-3/5 max-sm:w-screen fade slide-left">
       <img
-        src="/tmp-images/Monument_s.jpg"
-        alt=""
-        width="100%"
-        class="z-0 h-full w-full object-cover"
-        style="filter: brightness(1.5);"
+          src="/tmp-images/Monument_s.jpg"
+          alt=""
+          width="100%"
+          class="z-0 h-full w-full object-cover"
+          style="filter: brightness(1.5);"
       />
-      <div
-        class="absolute inset-0 bg-gradient-to-r max-sm:bg-gradient-to-b from-transparent from-50% to-white"
-      >
-      </div>
+      <div class="absolute inset-0 bg-gradient-to-r max-sm:bg-gradient-to-b from-transparent from-50% to-white"></div>
     </div>
-    <div
-      class="relative w-2/5 max-sm:w-screen z-10 items-center -ml-20 max-sm:ml-0 mt-[120px] max-sm:-mt-40 text-blue-950 max-sm:p-4 fade slide-bottom"
-    >
-      <h1 class="text-3xl font-exo2 font-bold mb-2 text-blue-950">
-        ZENIČKA PLANINSKA OAZA
-      </h1>
+    <div class="relative w-2/5 max-sm:w-screen z-10 items-center -ml-20 max-sm:ml-0 mt-[120px] max-sm:-mt-40 text-blue-950 max-sm:p-4 fade slide-bottom">
+      <h1 class="text-3xl font-exo2 font-bold mb-2 text-blue-950">{tr.index.section1_title}</h1>
       <div class="ttl-sep w-20 h-1 bg-orange-500 my-2"></div>
-      <p class="mt-5 text-[18px]">
-        Smetovi, planina smještena u općini Zenica, uzdiže se na 1.025 metara
-        nadmorske visine, oko 8 kilometara od centra grada. Popularno izletište
-        nudi staze za šetnju, biciklizam, zimske sportove i sportske terene, uz
-        restoran, prenoćište i sportsko-rekreacijski centar.
-      </p>
-      <p class="mt-4 text-[18px]">
-        Na vrhu planine nalazi se spomenik borcima Zeničkog partizanskog odreda
-        iz 1968. godine. Sa Smetova se, za vedrog dana, pruža pogled do 100 km,
-        obuhvatajući planine poput Zvijezde, Vranice i Vlašića. Planinarsko
-        društvo "Željezara" vodi planinarski dom, smješten uz potok Mračaja na
-        940 metara nadmorske visine.
-      </p>
+      <p class="mt-5 text-[18px]">{tr.index.section1_p1}</p>
+      <p class="mt-4 text-[18px]">{tr.index.section1_p2}</p>
       <a href="/map">
         <button
-          class="bg-blue-950 px-10 py-2 mt-5 text-white"
-          style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
+            class="bg-blue-950 px-10 py-2 mt-5 text-white"
+            style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
         >
-          Mapa
+          {tr.index.section1_btn}
         </button>
       </a>
     </div>
   </div>
-  <!-- Fauna and flora -->
-  <div
-    class="flex max-sm:flex-col-reverse lg:h-screen overflow-hidden observed"
-  >
-    <div
-      class="relative w-2/5 max-sm:w-screen z-10 items-center ml-20 -mr-20 max-sm:ml-0 max-sm:mr-0 mt-[120px] max-sm:-mt-40 text-blue-950 max-sm:p-4 fade slide-bottom"
-    >
-      <h1 class="text-3xl font-exo2 font-bold mb-2 text-blue-950">
-        FLORA I FAUNA
-      </h1>
+  <!-- Flora and fauna -->
+  <div class="flex max-sm:flex-col-reverse lg:h-screen overflow-hidden observed">
+    <div class="relative w-2/5 max-sm:w-screen z-10 items-center ml-20 -mr-20 max-sm:ml-0 max-sm:mr-0 mt-[120px] max-sm:-mt-40 text-blue-950 max-sm:p-4 fade slide-bottom">
+      <h1 class="text-3xl font-exo2 font-bold mb-2 text-blue-950">{tr.index.section2_title}</h1>
       <div class="ttl-sep w-20 h-1 bg-orange-500 my-2"></div>
-      <p class="mt-5 text-[18px]">
-        Prirodna ljepota Smetova nadopunjuje se njegovim ekološkim značajem.
-        Smetovi su dom raznolikom biljnom i životinjskom svijetu, čineći ga
-        važnim područjem za očuvanje biološke raznolikosti.
-      </p>
-      <p class="mt-4 text-[18px]">
-        Za one koji posjećuju Zenicu, putovanje do Smetova nije samo
-        planinarenje; to je prilika za povezivanje s prirodom, doživljaj ljepote
-        bosanskog krajolika i uživanje u raznim aktivnostima na otvorenom.
-        Smetovi ne nude samo osvježavajući bijeg od gradske vreve, već pružaju
-        prostor za fizičko i mentalno osvježenje, čineći ga dragocjenim
-        prirodnim blagom regije.
-      </p>
+      <p class="mt-5 text-[18px]">{tr.index.section2_p1}</p>
+      <p class="mt-4 text-[18px]">{tr.index.section2_p2}</p>
       <a href="/organizations">
         <button
-          class="bg-blue-950 px-10 py-2 mt-5 text-white"
-          style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
+            class="bg-blue-950 px-10 py-2 mt-5 text-white"
+            style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
         >
-          Istraži prirodu
+          {tr.index.section2_btn}
         </button>
       </a>
     </div>
@@ -89,17 +59,14 @@ import PageLayout from "../layouts/PageLayout.astro";
         <source media="(max-width: 640px)" srcset="/tmp-images/Fox_s.jpg" />
         <source media="(min-width: 641px)" srcset="/tmp-images/Fox.jpg" />
         <img
-          src="/tmp-images/Fox.jpg"
-          alt=""
-          width="100%"
-          class="z-0 h-full w-full object-cover"
-          style="transform: scaleX(-1);"
+            src="/tmp-images/Fox.jpg"
+            alt=""
+            width="100%"
+            class="z-0 h-full w-full object-cover"
+            style="transform: scaleX(-1);"
         />
       </picture>
-      <div
-        class="absolute inset-0 bg-gradient-to-l max-sm:bg-gradient-to-b from-transparent from-50% to-white"
-      >
-      </div>
+      <div class="absolute inset-0 bg-gradient-to-l max-sm:bg-gradient-to-b from-transparent from-50% to-white"></div>
     </div>
   </div>
 </PageLayout>
@@ -116,32 +83,13 @@ import PageLayout from "../layouts/PageLayout.astro";
     justify-content: center;
     align-items: center;
   }
-  main img {
-    max-width: 100;
-    height: auto;
-  }
-  .fade {
-    opacity: 0;
-    transition: all 1s ease;
-  }
-  @media (prefers-reduced-motion) {
-    .fade {
-      transition: none;
-    }
-  }
-  .slide-left {
-    transform: translateX(-50px);
-  }
-  .slide-right {
-    transform: translateX(50px);
-  }
-  .slide-bottom {
-    transform: translateY(50px);
-  }
-  .show {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  main img { max-width: 100; height: auto; }
+  .fade { opacity: 0; transition: all 1s ease; }
+  @media (prefers-reduced-motion) { .fade { transition: none; } }
+  .slide-left { transform: translateX(-50px); }
+  .slide-right { transform: translateX(50px); }
+  .slide-bottom { transform: translateY(50px); }
+  .show { opacity: 1; transform: translateX(0); }
 </style>
 
 <script>
@@ -149,39 +97,31 @@ import PageLayout from "../layouts/PageLayout.astro";
   const logo = document.getElementById("logo");
 
   const logoObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        let ratio = entry.intersectionRatio;
-        let opacity = (ratio - 0.5) / 0.5;
-        opacity = Math.max(0, Math.min(1, opacity));
-        if (logo != null) {
-          logo.style.opacity = opacity.toString();
-        }
-      });
-    },
-    {
-      threshold: Array.from({ length: 101 }, (_, i) => i / 100),
-    }
+      (entries) => {
+        entries.forEach((entry) => {
+          let ratio = entry.intersectionRatio;
+          let opacity = (ratio - 0.5) / 0.5;
+          opacity = Math.max(0, Math.min(1, opacity));
+          if (logo != null) logo.style.opacity = opacity.toString();
+        });
+      },
+      { threshold: Array.from({ length: 101 }, (_, i) => i / 100) }
   );
-  if (main != null) {
-    logoObserver.observe(main);
-  }
+  if (main != null) logoObserver.observe(main);
 
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.firstElementChild?.classList.add("show");
-          entry.target.lastElementChild?.classList.add("show");
-        } else {
-          entry.target.firstElementChild?.classList.remove("show");
-          entry.target.lastElementChild?.classList.remove("show");
-        }
-      });
-    },
-    {
-      threshold: 0.4,
-    }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.firstElementChild?.classList.add("show");
+            entry.target.lastElementChild?.classList.add("show");
+          } else {
+            entry.target.firstElementChild?.classList.remove("show");
+            entry.target.lastElementChild?.classList.remove("show");
+          }
+        });
+      },
+      { threshold: 0.4 }
   );
 
   const observedElements = document.querySelectorAll(".observed");
