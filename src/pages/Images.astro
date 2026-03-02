@@ -269,15 +269,7 @@ const images = [
   }
 </style>
 
-<script is:inline>
-  const images = [
-    "/images/slike/_smetoviImage1.png",
-    "/images/slike/_smetoviImage2.png",
-    "/images/slike/_smetoviImage3.png",
-    "/images/slike/_smetoviImage4.png",
-    "/images/slike/_smetoviImage5.png",
-    "/images/slike/_smetoviImage6.png",
-  ];
+<script is:inline define:vars={{ images }}>
 
   let currentSlideIndex = 0;
   const sliderModal = document.getElementById("imageSlider");
@@ -306,6 +298,10 @@ const images = [
 
     updateSliderImage();
   }
+
+  window.openSlider = openSlider;
+  window.closeSlider = closeSlider;
+  window.changeSlide = changeSlide;
 
   function updateSliderImage() {
     if (sliderImage) {
