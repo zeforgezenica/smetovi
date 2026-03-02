@@ -5,7 +5,20 @@ import { getLangFromCookie } from "../i18n/server";
 import { t } from "../i18n";
 
 type Props = CollectionEntry<"organization">["data"];
-const { title, description, heroImage, type, workHours, phone, contact, mapUrl,facebookUrl, instagram, instagramUrl} = Astro.props;
+const {
+  title,
+  description,
+  heroImage,
+  type,
+  workHours,
+  phone,
+  contact,
+  mapUrl,
+  facebook,
+  facebookUrl,
+  instagram,
+  instagramUrl,
+} = Astro.props;
 
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
@@ -19,32 +32,63 @@ const tr = t(lang);
     <article>
       <div class="prose">
         <div class="mb-4 text-left">
-          <div class="text-gray-500 font-atkinson mb-2">{tr.organizations.type_prefix} / {type}</div>
+          <div class="text-gray-500 font-atkinson mb-2">
+            {tr.organizations.type_prefix} / {type}
+          </div>
           <h1 class="text-3xl font-exo2 font-bold mb-2">{title}</h1>
           <div class="w-20 h-1 bg-orange-500 mb-4"></div>
-          <h2 class="text-lg font-atkinson text-gray-500">{tr.organizations.work_hours}: {workHours}</h2>
-          <h2 class="text-lg font-atkinson text-gray-500">{tr.organizations.phone}: {phone}</h2>
           <h2 class="text-lg font-atkinson text-gray-500">
-            {tr.organizations.contact}: <a href={contact} class="text-blue-500 underline">{contact}</a>
+            {tr.organizations.work_hours}: {workHours}
+          </h2>
+          <h2 class="text-lg font-atkinson text-gray-500">
+            {tr.organizations.phone}: {phone}
+          </h2>
+          <h2 class="text-lg font-atkinson text-gray-500">
+            {tr.organizations.contact}: <a
+              href={contact}
+              class="text-blue-500 underline">{contact}</a
+            >
           </h2>
           <h2 class="text-lg font-atkinson text-gray-500">
             Telefon: {phone}
           </h2>
-          {contact && (
-            <h2 class="text-lg font-atkinson text-gray-500">
-              Kontakt: {contact}
-            </h2>
-          )}
-          {facebook && facebookUrl && (
-            <h2 class="text-lg font-atkinson text-gray-500">
-              Facebook: <a href={facebookUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{facebook}</a>
-            </h2>
-          )}
-          {instagram && instagramUrl && (
-            <h2 class="text-lg font-atkinson text-gray-500">
-              Instagram: <a href={instagramUrl} class="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{instagram}</a>
-            </h2>
-          )}
+          {
+            contact && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Kontakt: {contact}
+              </h2>
+            )
+          }
+          {
+            facebook && facebookUrl && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Facebook:{" "}
+                <a
+                  href={facebookUrl}
+                  class="text-blue-500 underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {facebook}
+                </a>
+              </h2>
+            )
+          }
+          {
+            instagram && instagramUrl && (
+              <h2 class="text-lg font-atkinson text-gray-500">
+                Instagram:{" "}
+                <a
+                  href={instagramUrl}
+                  class="text-blue-500 underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {instagram}
+                </a>
+              </h2>
+            )
+          }
           <h2 class="text-lg font-atkinson text-gray-500">
             Lokacija: <a href={mapUrl} class="text-blue-500 underline"
               >Prikaži na mapi</a
@@ -58,20 +102,45 @@ const tr = t(lang);
 </PageLayout>
 
 <style>
-  main { width: 100%; margin: 0; }
-  .image-container { width: 100%; height: 0; top: 0; padding-bottom: 47.41%; position: absolute; }
+  main {
+    width: 100%;
+    margin: 0;
+  }
+  .image-container {
+    width: 100%;
+    height: 0;
+    top: 0;
+    padding-bottom: 47.41%;
+    position: absolute;
+  }
   .hero-image {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center; z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
     box-shadow: var(--box-shadow);
     -webkit-mask-image: url("/OrgPost ImgMask21_10.svg");
-    -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
     mask-image: url("/OrgPost ImgMask21_10.svg");
-    mask-size: cover; mask-repeat: no-repeat; mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+    mask-position: center;
   }
   .prose {
-    width: 720px; max-width: calc(100% - 2em); background-color: white;
-    margin: calc(30vw - 80px) auto 0; padding: 3em; color: rgb(var(--gray-dark));
-    box-shadow: 0 0 50px rgba(150, 150, 150, 0.5), 0 0 50px rgba(150, 150, 150, 0.5);
+    width: 720px;
+    max-width: calc(100% - 2em);
+    background-color: white;
+    margin: calc(30vw - 80px) auto 0;
+    padding: 3em;
+    color: rgb(var(--gray-dark));
+    box-shadow:
+      0 0 50px rgba(150, 150, 150, 0.5),
+      0 0 50px rgba(150, 150, 150, 0.5);
   }
 </style>
