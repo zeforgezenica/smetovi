@@ -32,16 +32,18 @@ const tr = t(lang);
       </h1>
       <hr class="md:px-2 mx-2 bg-yellow border-0 h-1 w-56" />
       <p class="m-2 mb-4">{tr.contact.newsletter_desc}</p>
-      <form id="newsletterForm" onsubmit="return false;">
+      <form id="newsletterForm" onsubmit="return false;" class="flex flex-col sm:flex-row gap-2 m-2 w-[95%]">
         <input
             name="email"
             type="email"
-            class="w-[95%] p-2 border border-gray-300 rounded m-2"
+            class="flex-1 p-2 border border-gray-300 rounded focus:border-darkBlue outline-none transition-all"
             placeholder={tr.contact.email_placeholder}
         />
-        <button class="m-2">
-          <div class="diagonal-border p-[2px] bg-darkBlue">
-            <div class="diagonal-square px-4 py-2 w-40">{tr.contact.subscribe}</div>
+        <button class="shrink-0">
+          <div class="diagonal-border p-[2px] bg-darkBlue hover:bg-blue-800 transition-colors">
+            <div class="diagonal-square px-4 py-2 bg-white text-darkBlue font-bold text-center w-40">
+              {tr.contact.subscribe}
+            </div>
           </div>
         </button>
       </form>
@@ -62,20 +64,17 @@ const tr = t(lang);
           </div>
         </div>
 
-        <div class="w-full relative float-label-group">
+        <div class="w-full flex flex-col md:flex-row gap-5 justify-between">
           <input
               type="text" id="name" name="name" required
-              class="w-full p-2 border border-gray-300 rounded"
+              class="w-full p-2 border border-gray-300 rounded focus:border-darkBlue outline-none"
               placeholder={tr.contact.first_name_placeholder}
           />
           <input
               type="text" id="lastName" name="lastName" required
-              class="w-full p-2 border border-gray-300 rounded"
+              class="w-full p-2 border border-gray-300 rounded focus:border-darkBlue outline-none"
               placeholder={tr.contact.last_name_placeholder}
           />
-          <label for="subject" class="absolute left-4 top-4 text-gray-500 transition-all peer-focus:text-xs peer-focus:top-2 peer-focus:text-sky-950 peer-valid:text-xs peer-valid:top-2 pointer-events-none"
-            >Predmet</label
-          >
         </div>
 
         <label for="email" class="block text-sm font-medium text-gray-700">{tr.contact.email}</label>
