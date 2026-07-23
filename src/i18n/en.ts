@@ -13,6 +13,7 @@ export const en: Translations = {
     },
     index: {
         hero_alt: "Smetovi Logo",
+        hero_explore: "Explore Smetovi",
         section1_title: "ZENICA'S MOUNTAIN OASIS",
         section1_p1: "Smetovi, a mountain located in the municipality of Zenica, rises to 1,025 meters above sea level, approximately 8 kilometers from the city center. This popular excursion spot offers hiking trails, cycling, winter sports and sports courts, along with a restaurant, accommodation and a sports-recreation center.",
         section1_p2: "At the mountain's peak stands a monument to the fighters of the Zenica Partisan Detachment, erected in 1968. On a clear day, Smetovi offers views stretching up to 100 km, encompassing mountains such as Zvijezda, Vranica and Vlašić. The mountaineering society 'Željezara' manages the mountain lodge, situated along the Mračaja stream at 940 meters above sea level.",

@@ -10,9 +10,15 @@ const tr = t(lang);
 <PageLayout>
   <main id="main" class="landing-background">
     <img id="logo" src="/smetovi-logo.png" alt={tr.index.hero_alt} srcset="" />
+    <a class="explore-link" href="#upoznaj-smetove">
+      <span>{tr.index.hero_explore}</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </a>
   </main>
   <!-- Monument -->
-  <div class="flex max-sm:flex-col lg:h-screen overflow-hidden observed">
+  <div id="upoznaj-smetove" class="flex max-sm:flex-col lg:h-screen overflow-hidden observed">
     <div class="relative w-3/5 max-sm:w-screen fade slide-left">
       <img
           src="/tmp-images/Monument_s.jpg"
@@ -85,10 +91,14 @@ const tr = t(lang);
 </PageLayout>
 
 <style>
+  :global(html) {
+    scroll-behavior: smooth;
+  }
   .landing-background {
     background-image: url("/landing-image.png");
     background-size: cover;
     background-position: center;
+    position: relative;
     height: 100vh;
     width: 100vw;
     color: white;
@@ -97,8 +107,56 @@ const tr = t(lang);
     align-items: center;
   }
   main img { max-width: 100; height: auto; }
+  .explore-link {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: white;
+    font-family: "Exo2", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-shadow: 0 1px 8px rgb(0 0 0 / 70%);
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    transition: color 0.2s ease;
+  }
+  .explore-link:hover {
+    color: var(--pumpkin-orange);
+  }
+  .explore-link:focus-visible {
+    border-radius: 0.25rem;
+    outline: 3px solid var(--pumpkin-orange);
+    outline-offset: 0.4rem;
+  }
+  .explore-link svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    animation: explore-bounce 1.8s ease-in-out infinite;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+  #upoznaj-smetove {
+    scroll-margin-top: 3.5rem;
+  }
+  @keyframes explore-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(0.35rem); }
+  }
   .fade { opacity: 0; transition: all 1s ease; }
-  @media (prefers-reduced-motion) { .fade { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) { scroll-behavior: auto; }
+    .fade { transition: none; }
+    .explore-link svg { animation: none; }
+  }
   .slide-left { transform: translateX(-50px); }
   .slide-right { transform: translateX(50px); }
   .slide-bottom { transform: translateY(50px); }
