@@ -5,6 +5,7 @@ workHours: "Zimi, zavisno od snijega"
 phone: "--"
 contact: "--"
 description: "Skijalište na Smetovima nudi potencijlalne mogućnosti za staze prilagođene početnicima i rekreativcima, sa prelijepim pogledom na okolne planine."
+heroImage: "/landing-image.png"
 location: [44.246, 17.975]
 mapUrl: "https://maps.google.com/?q=44.246,17.975"
 ---
