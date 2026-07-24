@@ -19,17 +19,21 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang = "bs" }) => {
     }
   }, []);
 
+  const isActive = (href: string) =>
+    href === "/" ? currentPath === "/" : currentPath === href || currentPath.startsWith(`${href}/`);
+
   return (
       <div className="burger-menu open blur-background">
         <div className="menu-content">
-          <div className="links">
-            <a href="/map" className={currentPath === "/map" ? "active" : ""}>{tr.nav.map}</a>
-            <a href="/" className={currentPath === "/" ? "active" : ""}>{tr.nav.home}</a>
-            <a href="/blog" className={currentPath === "/blog" ? "active" : ""}>{tr.nav.news}</a>
-            <a href="/organizations" className={currentPath === "/organizations" ? "active" : ""}>{tr.nav.organizations}</a>
-            <a href="/events" className={currentPath === "/events" ? "active" : ""}>{tr.nav.events}</a>
-            <a href="/contact" className={currentPath === "/contact" ? "active" : ""}>{tr.nav.contact}</a>
-          </div>
+          <nav className="links" aria-label={tr.nav.mobile_menu}>
+            <a href="/" className={isActive("/") ? "active" : ""} aria-current={isActive("/") ? "page" : undefined}>{tr.nav.home}</a>
+            <a href="/map" className={isActive("/map") ? "active" : ""} aria-current={isActive("/map") ? "page" : undefined}>{tr.nav.map}</a>
+            <a href="/blog" className={isActive("/blog") ? "active" : ""} aria-current={isActive("/blog") ? "page" : undefined}>{tr.nav.news}</a>
+            <a href="/organizations" className={isActive("/organizations") ? "active" : ""} aria-current={isActive("/organizations") ? "page" : undefined}>{tr.nav.organizations}</a>
+            <a href="/events" className={isActive("/events") ? "active" : ""} aria-current={isActive("/events") ? "page" : undefined}>{tr.nav.events}</a>
+            <a href="/contact" className={isActive("/contact") ? "active" : ""} aria-current={isActive("/contact") ? "page" : undefined}>{tr.nav.contact}</a>
+            <a href="/Images" className={isActive("/Images") ? "active" : ""} aria-current={isActive("/Images") ? "page" : undefined}>{tr.nav.images}</a>
+          </nav>
         </div>
       </div>
   );

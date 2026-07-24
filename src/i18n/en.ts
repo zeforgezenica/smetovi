@@ -10,6 +10,9 @@ export const en: Translations = {
         contact: "Contact",
         images: "Gallery",
         weather: "Weather",
+        open_menu: "Open navigation",
+        close_menu: "Close navigation",
+        mobile_menu: "Mobile navigation",
     },
     index: {
         hero_alt: "Smetovi Logo",

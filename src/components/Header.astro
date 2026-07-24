@@ -5,7 +5,7 @@ import Weather from './WeatherComponent/WeatherComponent.tsx';
 import LanguageSwitcher from './LanguageSwitcher.tsx';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { getLangFromCookie } from '../i18n/server';
-import { t, type Lang } from "../i18n";
+import { t } from "../i18n";
 
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
@@ -15,12 +15,27 @@ const tr = t(lang);
   document.addEventListener('DOMContentLoaded', () => {
     const menuButton = document.getElementById('menu-button');
     const menuContainer = document.getElementById('menu-container');
-    menuButton?.addEventListener('click', () => {
-      menuContainer.classList.toggle('hidden');
-      const isHidden = menuContainer.classList.contains('hidden');
-      const icon = menuButton.querySelector('i');
+    const setMenuOpen = (isOpen) => {
+      menuContainer?.classList.toggle('hidden', !isOpen);
+      menuContainer?.setAttribute('aria-hidden', String(!isOpen));
+      menuButton?.setAttribute('aria-expanded', String(isOpen));
+      menuButton?.setAttribute(
+        'aria-label',
+        isOpen ? menuButton.dataset.closeLabel : menuButton.dataset.openLabel
+      );
+      const icon = menuButton?.querySelector('i');
       if (icon) {
-        icon.className = isHidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+        icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+      }
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    };
+    menuButton?.addEventListener('click', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        menuButton.focus();
       }
     });
   });
@@ -45,14 +60,23 @@ const tr = t(lang);
         </HeaderLink>
       </div>
       <LanguageSwitcher client:load />
-      <div class="block md:hidden" id="menu-button" style="cursor: pointer;">
-        <i class="fa-solid fa-bars" style="font-size: 32px; position: relative; top:2px;"></i>
-      </div>
+      <button
+        type="button"
+        class="grid md:hidden"
+        id="menu-button"
+        aria-controls="menu-container"
+        aria-expanded="false"
+        aria-label={tr.nav.open_menu}
+        data-open-label={tr.nav.open_menu}
+        data-close-label={tr.nav.close_menu}
+      >
+        <i aria-hidden="true" class="fa-solid fa-bars"></i>
+      </button>
     </div>
   </nav>
 </header>
 
-<div id="menu-container" class="hidden md:hidden">
+<div id="menu-container" class="hidden md:hidden" aria-hidden="true">
   <BurgerMenu client:load lang={lang} />
 </div>
 
@@ -78,5 +102,21 @@ const tr = t(lang);
     border-bottom: 4px solid var(--pumpkin-orange) !important;
     border-inline: 4px solid transparent !important;
   }
-  #menu-button:hover { cursor: pointer; color: var(--pumpkin-orange); }
+  #menu-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: rgb(var(--black));
+    cursor: pointer;
+  }
+  #menu-button i { font-size: 32px; }
+  #menu-button:hover { color: var(--pumpkin-orange); }
+  #menu-button:focus-visible {
+    border-radius: 4px;
+    outline: 3px solid var(--pumpkin-orange);
+    outline-offset: 2px;
+  }
 </style>

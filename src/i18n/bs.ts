@@ -8,6 +8,9 @@ export const bs = {
         contact: "Kontakt",
         images: "Galerija",
         weather: "Vrijeme",
+        open_menu: "Otvori navigaciju",
+        close_menu: "Zatvori navigaciju",
+        mobile_menu: "Mobilna navigacija",
     },
     index: {
         hero_alt: "Smetovi Logo",
