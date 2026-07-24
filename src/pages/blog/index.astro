@@ -2,10 +2,14 @@
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../../i18n/server";
+import { t } from "../../i18n";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <PageLayout>
@@ -15,13 +19,16 @@ const posts = (await getCollection("blog")).sort(
         {
           posts.map((post) => (
             <li>
-              <a href={`/blog/${post.slug}/`}>
-                <div class="organization flex flex-col md:flex-row w-4/5 mx-auto bg-white shadow-lg overflow-hidden">
-                  <div class="org-image flex-none md:w-1/4 h-48 md:h-auto">
+              <a
+                href={`/blog/${post.slug}/`}
+                class="group block w-4/5 max-w-6xl mx-auto no-underline focus-visible:outline-none"
+              >
+                <article class="organization flex flex-col md:flex-row bg-white shadow-md overflow-hidden transition duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-xl group-focus-visible:-translate-y-1 group-focus-visible:shadow-xl group-focus-visible:ring-4 group-focus-visible:ring-orange-500/70">
+                  <div class="org-image flex-none md:w-1/4 h-48 md:h-auto overflow-hidden">
                     <img
                       src={post.data.heroImage}
-                      alt=""
-                      class={"object-cover w-full h-full"}
+                      alt={post.data.title}
+                      class="object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 group-focus-visible:scale-105"
                     />
                   </div>
                   <div class="org-content flex flex-col justify-center items-start flex-grow p-4">
@@ -31,14 +38,14 @@ const posts = (await getCollection("blog")).sort(
                     <h4 class="title font-bold font-exo2 text-lg text-sky-950 sm:text-base md:text-xl lg:text-2xl xl:text-3xl">
                       {post.data.title}
                     </h4>
-                    <button
-                      class="bg-sky-950 px-6 py-2 text-white"
+                    <span
+                      class="inline-block bg-sky-950 px-6 py-2 text-white transition-colors duration-200 group-hover:bg-orange-500 group-focus-visible:bg-orange-500"
                       style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
                     >
-                      Pročitaj više
-                    </button>
+                      {tr.blog.read_more}
+                    </span>
                   </div>
-                </div>
+                </article>
               </a>
             </li>
           ))

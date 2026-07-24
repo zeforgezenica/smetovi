@@ -33,17 +33,20 @@ function isOpen(workHours: string): boolean | null {
             const postIsOpen = isOpen(post.data.workHours);
             return (
               <li>
-                <a href={`/organizations/${post.slug}/`}>
-                  <div class="organization flex flex-col md:flex-row w-4/5 mx-auto bg-white shadow-lg overflow-hidden">
-                    <div class="org-image flex-none md:w-1/4 h-48 md:h-auto">
+                <a
+                  href={`/organizations/${post.slug}/`}
+                  class="group block w-4/5 max-w-6xl mx-auto no-underline focus-visible:outline-none"
+                >
+                  <article class="organization flex flex-col md:flex-row bg-white shadow-md overflow-hidden transition duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-xl group-focus-visible:-translate-y-1 group-focus-visible:shadow-xl group-focus-visible:ring-4 group-focus-visible:ring-orange-500/70">
+                    <div class="org-image flex-none md:w-1/4 h-48 md:h-auto overflow-hidden">
                       <img
                           src={post.data.heroImage}
-                          alt=""
-                          class={`object-cover w-full h-full ${postIsOpen === false ? "filter grayscale" : ""}`}
+                          alt={post.data.title}
+                          class={`object-cover w-full h-full transition duration-500 ease-out group-hover:scale-105 group-focus-visible:scale-105 ${postIsOpen === false ? "filter grayscale" : ""}`}
                       />
                     </div>
                     <div class="org-content flex flex-col justify-center items-start flex-grow p-4">
-                      <h4 class="title font-exo2 text-lg sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold">
+                      <h4 class="title font-exo2 text-lg text-sky-950 sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold">
                         {post.data.title}
                       </h4>
                       <h5 class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600">
@@ -56,7 +59,7 @@ function isOpen(workHours: string): boolean | null {
                         {postIsOpen === null ? tr.organizations.unknown : (postIsOpen ? tr.organizations.open : tr.organizations.closed)}
                       </h5>
                     </div>
-                  </div>
+                  </article>
                 </a>
               </li>
             );
