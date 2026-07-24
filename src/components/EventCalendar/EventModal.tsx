@@ -1,15 +1,17 @@
 import React from "react";
-import { t, getLang } from "../../i18n";
+import { t, type Lang } from "../../i18n";
 
 interface EventModalProps {
   isOpen: boolean;
   onClose: () => void;
+  lang?: Lang;
   event: {
     title: string;
     date: string | undefined;
     time: string | undefined;
     location: string;
     description: string;
+    category?: string;
   } | null;
 }
 
@@ -17,11 +19,9 @@ const EventModal = ({
   isOpen,
   onClose,
   event,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  event: any;
-}) => {
+  lang = "bs",
+}: EventModalProps) => {
+  const tr = t(lang);
   if (!isOpen || !event) return null;
 
   return (
@@ -29,6 +29,7 @@ const EventModal = ({
       <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-lg w-full transform scale-100 transition-transform relative animate-zoom">
         <button
           onClick={onClose}
+          aria-label={tr.events.close}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold"
         >
           &times;
@@ -47,22 +48,22 @@ const EventModal = ({
         <div className="space-y-3 mb-6 text-gray-700">
           <p className="flex items-center">
             <i className="fa-regular fa-calendar w-6 text-sky-700"></i>{" "}
-            <strong>Datum:</strong> <span className="ml-2">{event.date}</span>
+            <strong>{tr.events.date}:</strong> <span className="ml-2">{event.date}</span>
           </p>
           <p className="flex items-center">
             <i className="fa-regular fa-clock w-6 text-sky-700"></i>{" "}
-            <strong>Vrijeme:</strong> <span className="ml-2">{event.time}</span>
+            <strong>{tr.events.time}:</strong> <span className="ml-2">{event.time}</span>
           </p>
           <p className="flex items-center">
             <i className="fa-solid fa-location-dot w-6 text-sky-700"></i>{" "}
-            <strong>Lokacija:</strong>{" "}
+            <strong>{tr.events.location}:</strong>{" "}
             <span className="ml-2">{event.location}</span>
           </p>
         </div>
 
         <div className="border-t border-gray-100 pt-4 mb-8">
           <h4 className="text-sm font-semibold text-gray-400 uppercase mb-2">
-            Opis događaja
+            {tr.events.event_description}
           </h4>
           <p className="text-gray-800 leading-relaxed">{event.description}</p>
         </div>
@@ -72,10 +73,10 @@ const EventModal = ({
             onClick={onClose}
             className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors"
           >
-            Zatvori
+            {tr.events.close}
           </button>
           <button className="bg-sky-950 hover:bg-sky-900 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-colors">
-            Pridruži se
+            {tr.events.register}
           </button>
         </div>
       </div>

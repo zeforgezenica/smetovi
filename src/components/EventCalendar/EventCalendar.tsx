@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { t, type Lang } from "../../i18n";
+import "./EventCalendar.css";
 
 class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
+  { children: React.ReactNode; message: string },
   { hasError: boolean; error: any }
 > {
   constructor(props: any) {
@@ -14,8 +16,8 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 bg-red-100 text-red-700 mt-8 rounded flex-col">
-          <h2>Došlo je do greške u kalendaru:</h2>
+        <div className="p-4 bg-red-100 text-red-700 mt-8 flex-col">
+          <h2>{this.props.message}</h2>
           <pre className="text-sm mt-2">{this.state.error?.toString()}</pre>
         </div>
       );
@@ -26,6 +28,8 @@ class ErrorBoundary extends React.Component<
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import bsLocale from "@fullcalendar/core/locales/bs";
+import enGbLocale from "@fullcalendar/core/locales/en-gb";
 
 import EventModal from "./EventModal";
 
@@ -50,23 +54,44 @@ interface SelectedEvent {
   time: string;
 }
 
-export default function EventCalendar({ events = [] }: { events?: Event[] }) {
+export default function EventCalendar({
+  events = [],
+  lang = "bs",
+}: {
+  events?: Event[];
+  lang?: Lang;
+}) {
+  const tr = t(lang);
+  const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(
     null,
   );
-  const [activeCategory, setActiveCategory] = useState<string>("Sve");
+  const [activeCategory, setActiveCategory] = useState<string>(tr.events.all);
+  const mobileMonthNames =
+    lang === "bs"
+      ? ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
+      : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const updateViewport = () => setIsMobile(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   // Extract unique categories
   const categories = Array.from(
     new Set([
-      "Sve",
+      tr.events.all,
       ...(events.map((e) => e.data.category).filter(Boolean) as string[]),
     ]),
   );
 
   const filteredEvents =
-    activeCategory === "Sve"
+    activeCategory === tr.events.all
       ? events
       : events.filter((e) => e.data.category === activeCategory);
 
@@ -96,8 +121,8 @@ export default function EventCalendar({ events = [] }: { events?: Event[] }) {
   };
 
   return (
-    <ErrorBoundary>
-      <div className="event-calendar-container bg-white p-4 md:p-8 rounded-2xl shadow-xl mt-8 mb-16">
+    <ErrorBoundary message={tr.events.calendar_error}>
+      <div className="event-calendar-container bg-white p-4 md:p-8 shadow-md mt-8 mb-16">
         {/* Category Pills */}
         <div className="flex flex-wrap gap-2 mb-6">
           {categories.map((cat) => (
@@ -117,19 +142,34 @@ export default function EventCalendar({ events = [] }: { events?: Event[] }) {
 
         <FullCalendar
           plugins={[dayGridPlugin]}
+          locales={[bsLocale, enGbLocale]}
+          locale={lang === "bs" ? "bs" : "en-gb"}
           headerToolbar={{
-            left: "prev,next today",
+            left: "prev,next",
             center: "title",
-            right: "dayGridMonth",
+            right: "today",
           }}
+          titleFormat={
+            isMobile
+              ? ({ date }) =>
+                  `${mobileMonthNames[date.month]} ${date.year}`
+              : { year: "numeric", month: "long" }
+          }
+          dayHeaderFormat={
+            isMobile ? { weekday: "narrow" } : { weekday: "short" }
+          }
           initialView="dayGridMonth"
           dayMaxEvents={true}
           events={calendarEvents}
+          displayEventTime={!isMobile}
           businessHours={true}
           fixedWeekCount={false}
           height={"auto"}
           contentHeight={600}
           eventDisplay="block"
+          eventDidMount={(info) => {
+            info.el.title = info.event.title;
+          }}
           eventClick={handleEventClick}
         />
 
@@ -137,6 +177,7 @@ export default function EventCalendar({ events = [] }: { events?: Event[] }) {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           event={selectedEvent}
+          lang={lang}
         />
       </div>
     </ErrorBoundary>

@@ -1,87 +1,116 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseHead from "../components/BaseHead.astro"; 
-import Header from '../components/Header.astro'; 
-import Footer from '../components/Footer.astro'
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts'; 
-import EventCalendar from '../components/EventCalendar/EventCalendar.tsx';
+import { getCollection } from "astro:content";
+import EventCalendar from "../components/EventCalendar/EventCalendar.tsx";
+import PageLayout from "../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
 
-const eventsRaw = (await getCollection('events'))
-const events = eventsRaw.sort((a, b) => new Date(a.data.datetime).getTime() - new Date(b.data.datetime).getTime());
+const eventsRaw = await getCollection("events");
+const events = eventsRaw.sort(
+  (a, b) =>
+    new Date(a.data.datetime).getTime() - new Date(b.data.datetime).getTime(),
+);
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
+const dateLocale = lang === "bs" ? "bs-BA" : "en-GB";
 ---
 
-<!doctype html>
-<html lang="en">
-<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
-<body class="bg-gray-50 flex flex-col min-h-screen">
-	<Header/>
-	<main class="flex-grow mx-4 md:mx-8 lg:mx-16 mt-32 mb-8 max-w-7xl xl:mx-auto w-full">
-		<div class="flex flex-col items-center mb-8 text-center fadeIn">
-			<h1 class="text-4xl md:text-5xl font-exo2 font-bold text-sky-950 mb-2 uppercase tracking-wide">Događaji</h1>
-			<div class="w-24 h-1 bg-orange-500 mb-4"></div>
-			<p class="text-gray-600 max-w-2xl text-lg">Pregledajte sve nadolazeće aktivnosti, radne akcije, druženja i sportske događaje koji se održavaju na Smetovima.</p>
-		</div>
-		<div class="mb-12">
-			<h2 class="text-2xl font-bold text-sky-950 mb-6 flex items-center gap-2">
-				<i class="fa-solid fa-list-ul"></i> Lista nadolazećih događaja
-			</h2>
-			<div class="space-y-4">
-				{events.map((event) => {
-					const date = new Date(event.data.datetime);
-					const day = date.getDate();
-					const month = date.toLocaleDateString('bs-BA', { month: 'short' }).toUpperCase();
-					const time = date.toLocaleTimeString('bs-BA', { hour: '2-digit', minute: '2-digit' });
+<PageLayout
+  siteTitle={`${tr.events.title} | Smetovi`}
+  siteDescription={tr.events.description}
+>
+  <main class="pt-24 pb-12">
+    <header class="flex flex-col items-center px-4 mb-10 text-center">
+      <h1 class="text-4xl md:text-5xl font-exo2 font-bold text-sky-950 mb-2 uppercase tracking-wide">
+        {tr.events.title}
+      </h1>
+      <div class="w-24 h-1 bg-orange-500 mb-4"></div>
+      <p class="text-gray-600 max-w-2xl text-lg">{tr.events.description}</p>
+    </header>
 
-					return (
-						<div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow duration-300">
-							<div class="bg-sky-900 text-white flex flex-col justify-center items-center py-4 px-6 sm:w-32 flex-shrink-0">
-								<span class="text-3xl font-bold">{day}</span>
-								<span class="text-sm font-semibold tracking-wider">{month}</span>
-							</div>
-							<div class="p-4 md:p-6 flex-grow flex flex-col justify-center">
-								<div class="flex justify-between items-start mb-2 gap-4">
-									<h3 class="text-xl font-bold text-gray-800">{event.data.title}</h3>
-									{event.data.category && (
-										<span class="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide whitespace-nowrap">
-											{event.data.category}
-										</span>
-									)}
-								</div>
-								<p class="text-gray-600 text-sm mb-4 line-clamp-2 md:line-clamp-none">{event.data.description}</p>
-								<div class="flex flex-wrap gap-4 text-sm text-gray-500 font-medium">
-									<div class="flex items-center gap-1">
-										<i class="fa-regular fa-clock text-sky-700"></i> {time}
-									</div>
-									<div class="flex items-center gap-1">
-										<i class="fa-solid fa-location-dot text-sky-700"></i> {event.data.location}
-									</div>
-								</div>
-							</div>
-						</div>
-					)
-				})}
-			</div>
-		</div>
+    <div class="w-4/5 max-w-6xl mx-auto">
+      <section aria-labelledby="upcoming-events" class="mb-12">
+        <h2 class="text-2xl font-bold text-sky-950 mb-6 flex items-center gap-2">
+          <i aria-hidden="true" class="fa-solid fa-list-ul text-orange-500"></i>
+          <span id="upcoming-events">{tr.events.upcoming}</span>
+        </h2>
 
-		<div class="mb-4 text-center">
-			<h2 class="text-2xl font-bold text-sky-950 mb-2 mt-12 flex items-center justify-center gap-2">
-				<i class="fa-regular fa-calendar-days"></i> Kalendar pregled
-			</h2>
-			<p class="text-gray-500 text-sm">Kliknite na događaj za više detalja</p>
-		</div>
-		
-    	<EventCalendar events={events} client:only="react" />
-	</main>
-	<Footer/>
-</body>
-</html>
+        <div class="space-y-6">
+          {
+            events.map((event) => {
+              const date = new Date(event.data.datetime);
+              const day = date.getDate();
+              const month = date
+                .toLocaleDateString(dateLocale, { month: "short" })
+                .toUpperCase();
+              const time = date.toLocaleTimeString(dateLocale, {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
 
-<style>
-	.fadeIn {
-		animation: fadeIn 1s ease-in-out;
-	}
-	@keyframes fadeIn {
-		from { opacity: 0; transform: translateY(20px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-</style>
+              return (
+                <article class="bg-white shadow-md overflow-hidden flex flex-col sm:flex-row transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
+                  <div class="bg-sky-950 text-white flex flex-col justify-center items-center py-4 px-6 sm:w-32 flex-shrink-0">
+                    <span class="text-3xl font-bold">{day}</span>
+                    <span class="text-sm font-semibold tracking-wider">
+                      {month}
+                    </span>
+                  </div>
+                  <div class="p-4 md:p-6 flex-grow flex flex-col justify-center">
+                    <div class="flex justify-between items-start mb-2 gap-4">
+                      <h3 class="text-xl font-bold text-sky-950">
+                        {event.data.title}
+                      </h3>
+                      {event.data.category && (
+                        <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 uppercase tracking-wide whitespace-nowrap">
+                          {event.data.category}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2 md:line-clamp-none">
+                      {event.data.description}
+                    </p>
+                    <div class="flex flex-wrap gap-4 text-sm text-gray-500 font-medium">
+                      <div class="flex items-center gap-1">
+                        <i
+                          aria-hidden="true"
+                          class="fa-regular fa-clock text-sky-700"
+                        ></i>
+                        {time}
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <i
+                          aria-hidden="true"
+                          class="fa-solid fa-location-dot text-sky-700"
+                        ></i>
+                        {event.data.location}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+      </section>
+
+      <section aria-labelledby="events-calendar">
+        <div class="mb-4 text-center">
+          <h2
+            id="events-calendar"
+            class="text-2xl font-bold text-sky-950 mb-2 flex items-center justify-center gap-2"
+          >
+            <i
+              aria-hidden="true"
+              class="fa-regular fa-calendar-days text-orange-500"
+            ></i>
+            {tr.events.calendar}
+          </h2>
+          <p class="text-gray-500 text-sm">{tr.events.calendar_hint}</p>
+        </div>
+
+        <EventCalendar events={events} lang={lang} client:only="react" />
+      </section>
+    </div>
+  </main>
+</PageLayout>
