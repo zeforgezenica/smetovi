@@ -13,8 +13,17 @@ const tr = t(lang);
 ---
 
 <PageLayout>
-  <main class="pt-24">
-    <section>
+  <main class="pt-24 pb-12">
+    <header class="flex flex-col items-center px-4 mb-10 text-center">
+      <h1 id="news-title" class="text-4xl md:text-5xl font-exo2 font-bold text-sky-950 mb-2 uppercase tracking-wide">
+        {tr.blog.title}
+      </h1>
+      <div class="w-24 h-1 bg-orange-500 mb-4"></div>
+      <p class="text-gray-600 max-w-2xl text-lg">
+        {tr.blog.description}
+      </p>
+    </header>
+    <section aria-labelledby="news-title">
       <ul class="space-y-6">
         {
           posts.map((post) => (

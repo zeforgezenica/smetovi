@@ -2,7 +2,7 @@ export const bs = {
     nav: {
         map: "Mapa",
         home: "Početna",
-        news: "Vijesti",
+        news: "Novosti",
         organizations: "Organizacije",
         events: "Događaji",
         contact: "Kontakt",
@@ -25,6 +25,8 @@ export const bs = {
         section2_btn: "Istraži prirodu",
     },
     organizations: {
+        title: "Organizacije",
+        description: "Upoznajte mjesta, udruženja i sadržaje koji doprinose životu i ponudi Smetova.",
         work_hours: "Radno vrijeme",
         open: "Otvoreno",
         closed: "Zatvoreno",
@@ -36,6 +38,8 @@ export const bs = {
         show_on_map: "Prikaži na mapi",
     },
     blog: {
+        title: "Novosti",
+        description: "Pratite najnovije priče, projekte i dešavanja sa Smetova.",
         read_more: "Pročitaj više",
     },
     events: {

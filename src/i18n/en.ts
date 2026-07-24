@@ -27,6 +27,8 @@ export const en: Translations = {
         section2_btn: "Explore nature",
     },
     organizations: {
+        title: "Organizations",
+        description: "Discover the places, associations and amenities that contribute to life on Smetovi.",
         work_hours: "Working hours",
         open: "Open",
         closed: "Closed",
@@ -38,6 +40,8 @@ export const en: Translations = {
         show_on_map: "Show on map",
     },
     blog: {
+        title: "News",
+        description: "Follow the latest stories, projects and events from Smetovi.",
         read_more: "Read more",
     },
     events: {
