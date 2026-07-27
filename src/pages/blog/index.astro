@@ -12,7 +12,10 @@ const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
 ---
 
-<PageLayout>
+<PageLayout
+  siteTitle={`${tr.blog.title} | Smetovi`}
+  siteDescription={tr.blog.description}
+>
   <main class="pt-24 pb-12">
     <header class="flex flex-col items-center px-4 mb-10 text-center">
       <h1 id="news-title" class="text-4xl md:text-5xl font-exo2 font-bold text-sky-950 mb-2 uppercase tracking-wide">

@@ -24,7 +24,7 @@ const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
 ---
 
-<PageLayout siteTitle={title} siteDescription={description}>
+<PageLayout siteTitle={`${title} | Smetovi`} siteDescription={description}>
   <main>
     <div class="image-container">
       <img src={heroImage} alt={title} class="hero-image" />

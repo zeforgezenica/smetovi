@@ -8,7 +8,10 @@ const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
 ---
 
-<PageLayout>
+<PageLayout
+  siteTitle={`${tr.contact.title} | Smetovi`}
+  siteDescription={tr.contact.page_description}
+>
   <main class="flex flex-col md:flex-row justify-center w-[90%] lg:w-[85%] mx-auto mt-24">
     <section class="contact-form-section contact-info w-full md:w-1/2 box-border h-100 m-3">
       <h1 class="md:px-2 max-md:mx-2 rounded font-exo2 uppercase text-3xl sm:text-4xl md:text-5xl font-bold mb-4">

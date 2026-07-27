@@ -1,5 +1,10 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
+
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 
 const images = [
   "/images/slike/_smetoviImage1.png",
@@ -11,7 +16,10 @@ const images = [
 ];
 ---
 
-<PageLayout>
+<PageLayout
+  siteTitle={`${tr.gallery.title} | Smetovi`}
+  siteDescription={tr.gallery.description}
+>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <main class="imagesMain">
     {images.map((imageSrc, index) => (
@@ -348,4 +356,3 @@ const images = [
     e.stopPropagation();
   });
 </script>
-

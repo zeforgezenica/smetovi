@@ -7,6 +7,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  lang?: "bs" | "en";
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -15,7 +16,9 @@ const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   image = "/smetovi-logo.png",
+  lang = "bs",
 } = Astro.props;
+const socialImageURL = new URL(image, Astro.site);
 ---
 
 <head>
@@ -55,15 +58,17 @@ const {
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={Astro.url} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:site_name" content="Smetovi" />
+  <meta property="og:locale" content={lang === "bs" ? "bs_BA" : "en_GB"} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL(image, Astro.url)} />
+  <meta property="og:image" content={socialImageURL} />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content={Astro.url} />
-  <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content={new URL(image, Astro.url)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalURL} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={socialImageURL} />
 </head>

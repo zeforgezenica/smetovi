@@ -3,8 +3,12 @@ import MapComponent from "../components/MapComponent";
 import { getCollection } from "astro:content";
 import type { MapPin } from "../models/map.pin.model";
 import PageLayout from "../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
 
 const organizations = await getCollection("organizations");
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 
 const pins: MapPin[] = organizations.map((org) => ({
   type: org.data.type,
@@ -15,7 +19,11 @@ const pins: MapPin[] = organizations.map((org) => ({
 }));
 ---
 
-<PageLayout includeFooter={false}>
+<PageLayout
+  siteTitle={`${tr.map.title} | Smetovi`}
+  siteDescription={tr.map.description}
+  includeFooter={false}
+>
   <main>
     <MapComponent client:load {pins} />
   </main>

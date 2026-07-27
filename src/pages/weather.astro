@@ -2,7 +2,6 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BaseHead from "../components/BaseHead.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getWeatherIcon } from "../components/WeatherComponent/weatherIconMap";
 
 // 1. DEFINISANJE TIPOVA
@@ -94,9 +93,11 @@ function getWeatherDesc(code: number): string {
 
 <!doctype html>
 <html lang="bs">
-<head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-</head>
+<BaseHead
+    title="Vrijeme na Smetovima | Smetovi"
+    description="Trenutni vremenski uslovi, stanje puta i kratkoročna prognoza za Smetove."
+    lang="bs"
+/>
 <body class="bg-gray-50">
 <Header />
 <main class="flex flex-col md:flex-row justify-center w-[90%] lg:w-[85%] mx-auto mt-24 gap-6">

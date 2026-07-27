@@ -24,7 +24,10 @@ function isOpen(workHours: string): boolean | null {
 }
 ---
 
-<PageLayout>
+<PageLayout
+  siteTitle={`${tr.organizations.title} | Smetovi`}
+  siteDescription={tr.organizations.description}
+>
   <main class="pt-24 pb-12">
     <header class="flex flex-col items-center px-4 mb-10 text-center">
       <h1 id="organizations-title" class="text-4xl md:text-5xl font-exo2 font-bold text-sky-950 mb-2 uppercase tracking-wide">

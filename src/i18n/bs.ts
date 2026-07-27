@@ -15,6 +15,8 @@ export const bs = {
     index: {
         hero_alt: "Smetovi Logo",
         hero_explore: "Istraži Smetove",
+        meta_title: "Smetovi | Planinska oaza nadomak Zenice",
+        meta_description: "Istražite Smetove, omiljeno zeničko izletište za šetnju, rekreaciju, prirodu i zimske aktivnosti.",
         section1_title: "ZENIČKA PLANINSKA OAZA",
         section1_p1: "Smetovi, planina smještena u općini Zenica, uzdiže se na 1.025 metara nadmorske visine, oko 8 kilometara od centra grada. Popularno izletište nudi staze za šetnju, biciklizam, zimske sportove i sportske terene, uz restoran, prenoćište i sportsko-rekreacijski centar.",
         section1_p2: "Na vrhu planine nalazi se spomenik borcima Zeničkog partizanskog odreda iz 1968. godine. Sa Smetova se, za vedrog dana, pruža pogled do 100 km, obuhvatajući planine poput Zvijezde, Vranice i Vlašića. Planinarsko društvo 'Željezara' vodi planinarski dom, smješten uz potok Mračaja na 940 metara nadmorske visine.",
@@ -59,6 +61,7 @@ export const bs = {
     },
     contact: {
         title: "Kontaktirajte nas",
+        page_description: "Kontaktirajte zajednicu Smetovi ili se prijavite za novosti i informacije o planini.",
         newsletter_title: "Newsletter",
         newsletter_desc: "Pridružite se našoj zajednici ljubitelja prirode i planinarenja! Pretplatite se na naš newsletter kako biste prvi saznali o novostima sa Smetova, nadolazećim događajima, savjetima za planinarenje i aktivnostima na planini. Ostanite povezani s prirodom i uvijek informisani!",
         email_placeholder: "Vaša e-mail adresa",
@@ -79,6 +82,14 @@ export const bs = {
         message_placeholder: "Vaša poruka",
         send: "Pošalji",
         location: "Smetovi, Zenica, Bosna i Hercegovina",
+    },
+    map: {
+        title: "Mapa Smetova",
+        description: "Pronađite organizacije, objekte i zanimljive lokacije na interaktivnoj mapi Smetova.",
+    },
+    gallery: {
+        title: "Galerija Smetova",
+        description: "Pogledajte fotografije prirode, pejzaža i znamenitosti Smetova.",
     },
     footer: {
         contact_info: "KONTAKT INFORMACIJE",
