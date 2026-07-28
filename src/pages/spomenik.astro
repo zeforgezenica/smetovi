@@ -1,144 +1,516 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+
+const content = {
+  bs: {
+    metaTitle: "Spomenik Zeničkom odredu | Smetovi",
+    metaDescription: "Historija i značaj memorijalnog kompleksa Zeničkog partizanskog odreda na Smetovima.",
+    eyebrow: "Simbol otpora i pobjede",
+    title: "Spomenik Zeničkom odredu",
+    intro: "Memorijalni kompleks posvećen borcima Zeničkog partizanskog odreda i Trećeg istočnobosanskog udarnog bataljona.",
+    sections: [
+      {
+        number: "01",
+        title: "Izgradnja i svečano otvaranje",
+        paragraphs: [
+          "Spomenik na Smetovima svečano je otvoren 27. jula 1968. godine, kao centralna manifestacija obilježavanja Dana ustanka naroda Bosne i Hercegovine. Inicijativu za izgradnju pokrenuo je Savez udruženja boraca NOR-a općine Zenica, predvođen Mensurom Serdarevićem.",
+          "Na konkurs za idejno rješenje pristiglo je pet prijedloga, a izabran je rad akademskog kipara Arfana Hozića iz Sarajeva. U podnožju spomenika nalazi se mramorna ploča sa uklesanim imenima 32 pripadnika Zeničkog partizanskog odreda poginulih tokom puča u maju 1942. godine."
+        ]
+      },
+      {
+        number: "02",
+        title: "Poezija i simbolika otpora",
+        paragraphs: [
+          "Poseban pečat monumentu daju uklesani stihovi bosanskohercegovačkog pjesnika Izeta Sarajlića iz pjesme „Mala, velika moja“:",
+          "Tridesetak metara dalje od glavnog monumenta nalazi se i kameni amfiteatar, koji je originalno predviđen za održavanje časova historije na otvorenom, integrišući umjetnost i edukaciju u prirodni ambijent."
+        ],
+        quote: "I ne pitaj jesu li se mogli vratiti, i ne pitaj je li se moglo natrag, dok je posljednji put, crven kao komunizam gorio horizont njihovih želja."
+      },
+      {
+        number: "03",
+        title: "Hronika otpora iz 1942. godine",
+        paragraphs: [
+          "Puč u kojem su likvidirani istaknuti zenički antifašisti desio se u noći sa 5. na 6. maj 1942. godine na lokalitetu Kraljevine. U ovom tragičnom događaju stradalo je skoro kompletno rukovodstvo odreda, uključujući imena kao što su Sead Škrgo, Mustafa Ganibegović i Ivo Marjanović, dok je ranjen Vladimir Perić Valter.",
+          "Danas, spomenik stoji kao trajni podsjetnik na Treću neprijateljsku ofanzivu i borbu protiv fašizma, ali i kao mjesto gdje su zenički Bošnjaci 1942. godine Rezolucijom digli glas protiv deportacije Roma u logore."
+        ]
+      }
+    ],
+    detailsTitle: "Tehnički detalji",
+    details: [
+      ["Visina", "~13 m"],
+      ["Nadmorska visina", "999 m"],
+      ["Materijal", "Aluminij / metal"],
+      ["Otvoren", "1968. godine"]
+    ],
+    authorLabel: "Kipar i projektant",
+    author: "Arfan Hozić",
+    sourceLabel: "Izvor informacija",
+    source: "Afan Abazović / Naša riječ Zenica",
+    galleryEyebrow: "Detalji memorijala",
+    galleryTitle: "Spomenik kroz fotografije",
+    imageAlts: ["Spomenik Zeničkom odredu na Smetovima", "Detalj memorijalnog kompleksa", "Spomenik u planinskom pejzažu"]
+  },
+  en: {
+    metaTitle: "Monument to the Zenica Detachment | Smetovi",
+    metaDescription: "The history and significance of the memorial complex dedicated to the Zenica Partisan Detachment on Smetovi.",
+    eyebrow: "A symbol of resistance and victory",
+    title: "Monument to the Zenica Detachment",
+    intro: "A memorial complex dedicated to the fighters of the Zenica Partisan Detachment and the Third East Bosnian Assault Battalion.",
+    sections: [
+      {
+        number: "01",
+        title: "Construction and ceremonial opening",
+        paragraphs: [
+          "The monument on Smetovi was ceremonially opened on 27 July 1968 as the central event marking the Day of the Uprising of the People of Bosnia and Herzegovina. The initiative was launched by the Association of Veterans of the National Liberation War of the Zenica municipality, led by Mensur Serdarević.",
+          "Five proposals were submitted to the design competition, and the work of Sarajevo sculptor Arfan Hozić was selected. At the foot of the monument is a marble plaque bearing the names of 32 members of the Zenica Partisan Detachment who died during the coup in May 1942."
+        ]
+      },
+      {
+        number: "02",
+        title: "Poetry and the symbolism of resistance",
+        paragraphs: [
+          "The engraved verses by Bosnian poet Izet Sarajlić from the poem “Mala, velika moja” give the monument a distinctive character:",
+          "About thirty metres from the main monument stands a stone amphitheatre, originally intended for outdoor history lessons and designed to bring art and education into the natural setting."
+        ],
+        quote: "And do not ask whether they could have returned, and do not ask whether there was a way back, while for the last time, red as communism, burned the horizon of their desires."
+      },
+      {
+        number: "03",
+        title: "A chronicle of resistance from 1942",
+        paragraphs: [
+          "The coup in which prominent Zenica anti-fascists were killed took place on the night of 5–6 May 1942 at Kraljevine. Almost the entire leadership of the detachment died in this tragic event, including Sead Škrgo, Mustafa Ganibegović and Ivo Marjanović, while Vladimir Perić Valter was wounded.",
+          "Today, the monument remains a lasting reminder of the Third Enemy Offensive and the struggle against fascism, as well as the 1942 Resolution through which Zenica Bosniaks spoke out against the deportation of Roma to concentration camps."
+        ]
+      }
+    ],
+    detailsTitle: "Technical details",
+    details: [
+      ["Height", "~13 m"],
+      ["Elevation", "999 m"],
+      ["Material", "Aluminium / metal"],
+      ["Opened", "1968"]
+    ],
+    authorLabel: "Sculptor and designer",
+    author: "Arfan Hozić",
+    sourceLabel: "Information source",
+    source: "Afan Abazović / Naša riječ Zenica",
+    galleryEyebrow: "Memorial details",
+    galleryTitle: "The monument in photographs",
+    imageAlts: ["Monument to the Zenica Detachment on Smetovi", "Detail of the memorial complex", "The monument in the mountain landscape"]
+  }
+};
+
+const page = content[lang];
+const galleryImages = [
+  "/tmp-images/galerija-1.webp",
+  "/tmp-images/galerija-2.avif",
+  "/tmp-images/galerija-3.jpg"
+];
 ---
 
-<PageLayout
-  siteTitle="Spomenik Zeničkom odredu | Smetovi"
-  siteDescription="Historija i značaj memorijalnog kompleksa Zeničkog partizanskog odreda na Smetovima."
->
-  <main class="bg-white min-h-screen font-sans text-slate-900 leading-relaxed">
-    
-    <header class="pt-48 pb-32 border-b border-slate-100 bg-slate-50/50">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="flex flex-col items-center text-center">
-          <span class="text-orange-500 font-bold tracking-[0.4em] text-xs uppercase mb-6">Simbol otpora i pobjede</span>
-          <h1 class="text-6xl md:text-8xl font-black text-blue-950 tracking-tighter uppercase leading-[0.9] mb-8">
-            Spomenik <br />
-            <span class="font-light italic text-slate-400">Zeničkom odredu</span>
-          </h1>
-          <div class="w-24 h-2 bg-blue-950 mb-8"></div>
-          <p class="max-w-2xl text-slate-500 text-lg font-medium leading-relaxed">
-            Memorijalni kompleks posvećen borcima Zeničkog partizanskog odreda i Trećeg istočnobosanskog udarnog bataljona.
-          </p>
-        </div>
+<PageLayout siteTitle={page.metaTitle} siteDescription={page.metaDescription}>
+  <main class="monument-page">
+    <header class="monument-hero">
+      <img src="/images/smetovi-spomenik.jpg" alt="" aria-hidden="true" />
+      <div class="monument-hero__overlay"></div>
+      <div class="monument-hero__content">
+        <p class="eyebrow">{page.eyebrow}</p>
+        <h1>{page.title}</h1>
+        <div class="title-separator"></div>
+        <p class="monument-hero__intro">{page.intro}</p>
       </div>
     </header>
 
-    <div class="max-w-4xl mx-auto px-6 py-24">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
-        
-        <div class="md:col-span-8 space-y-20">
-          
-          <section>
-            <h2 class="text-3xl font-bold text-blue-950 mb-6 tracking-tight border-l-4 border-orange-500 pl-6">
-              01. Izgradnja i Svečano Otvaranje
-            </h2>
-            <div class="text-xl text-slate-700 font-light italic leading-loose space-y-6">
-              <p>
-                Spomenik na Smetovima svečano je otvoren <strong>27. jula 1968. godine</strong>, kao centralna manifestacija obilježavanja Dana ustanka naroda Bosne i Hercegovine. Inicijativu za izgradnju pokrenuo je Savez udruženja boraca NOR-a općine Zenica, predvođen Mensurom Serdarevićem.
-              </p>
-              <p>
-                Na konkurs za idejno rješenje pristiglo je pet prijedloga, a izabran je rad akademskog kipara <strong>Arfana Hozića</strong> iz Sarajeva. U podnožju spomenika nalazi se mramorna ploča sa uklesanim imenima 32 pripadnika Zeničkog partizanskog odreda poginulih tokom puča u maju 1942. godine.
-              </p>
+    <div class="monument-content">
+      <article class="story">
+        {page.sections.map((section) => (
+          <section class="story-section">
+            <div class="story-heading">
+              <span>{section.number}</span>
+              <h2>{section.title}</h2>
             </div>
+            <p>{section.paragraphs[0]}</p>
+            {section.quote && <blockquote>„{section.quote}“</blockquote>}
+            <p>{section.paragraphs[1]}</p>
           </section>
+        ))}
+      </article>
 
-          <section>
-            <h2 class="text-3xl font-bold text-blue-950 mb-6 tracking-tight border-l-4 border-orange-500 pl-6">
-              02. Poezija i Simbolika Otpora
-            </h2>
-            <div class="text-xl text-slate-700 font-light italic leading-loose space-y-6">
-              <p>
-                Poseban pečat monumentu daju uklesani stihovi legendarnog bosanskohercegovačkog pjesnika <strong>Izeta Sarajlića</strong> iz pjesme „Mala, velika moja“:
-              </p>
-              <blockquote class="border-y border-slate-100 py-8 my-8 text-2xl font-serif text-blue-950 text-center">
-                "I ne pitaj jesu li se mogli vratiti, i ne pitaj je li se moglo natrag, dok je posljednji put, crven kao komunizam gorio horizont njihovih želja."
-              </blockquote>
-              <p>
-                Tridesetak metara dalje od glavnog monumenta nalazi se i kameni amfiteatar, koji je originalno predviđen za održavanje časova historije na otvorenom, integrišući umjetnost i edukaciju u prirodni ambijent.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 class="text-3xl font-bold text-blue-950 mb-6 tracking-tight border-l-4 border-orange-500 pl-6">
-              03. Hronika otpora iz 1942. godine
-            </h2>
-            <div class="text-xl text-slate-700 font-light italic leading-loose space-y-6">
-              <p>
-                Puč u kojem su likvidirani istaknuti zenički antifašisti desio se u noći sa 5. na 6. maj 1942. godine na lokalitetu Kraljevine. U ovom tragičnom događaju stradalo je skoro kompletno rukovodstvo odreda, uključujući imena kao što su Sead Škrgo, Mustafa Ganibegović i Ivo Marjanović, dok je ranjen legendarni Vladimir Perić Valter.
-              </p>
-              <p>
-                Danas, spomenik stoji kao trajni podsjetnik na Treću neprijateljsku ofanzivu i borbu protiv fašizma, ali i kao mjesto gdje su zenički Bošnjaci 1942. godine Rezolucijom digli glas protiv deportacije Roma u logore.
-              </p>
-            </div>
-          </section>
+      <aside class="facts" aria-labelledby="facts-title">
+        <div class="facts-card">
+          <h2 id="facts-title">{page.detailsTitle}</h2>
+          <dl>
+            {page.details.map(([label, value]) => (
+              <div>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
-        <aside class="md:col-span-4 border-l border-slate-100 pl-8 h-fit sticky top-32">
-          <div class="space-y-12">
-            <div>
-              <h4 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">Tehnički Detalji</h4>
-              <ul class="space-y-4 text-sm font-medium text-blue-950 uppercase">
-                <li class="flex justify-between border-b border-slate-50 pb-2"><span>Visina</span> <span>~13 m</span></li>
-                <li class="flex justify-between border-b border-slate-50 pb-2"><span>Nadmorska v.</span> <span>999 m</span></li>
-                <li class="flex justify-between border-b border-slate-50 pb-2"><span>Materijal</span> <span>Aluminij / Metal</span></li>
-                <li class="flex justify-between border-b border-slate-50 pb-2"><span>Otvoren</span> <span>1968. god</span></li>
-              </ul>
-            </div>
-            <div class="bg-blue-950 p-6 rounded-2xl text-white">
-              <p class="text-xs uppercase tracking-widest opacity-60 mb-2">Kipar i projektant</p>
-              <p class="text-xl font-bold italic">Arfan Hozić</p>
-            </div>
-            <div class="text-[10px] text-slate-400 uppercase tracking-widest leading-tight">
-              Izvor informacija: <br />Afan Abazović / Naša riječ Zenica
-            </div>
-          </div>
-        </aside>
+        <div class="author-card">
+          <p>{page.authorLabel}</p>
+          <strong>{page.author}</strong>
+        </div>
 
-      </div>
+      </aside>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 pb-24">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="group overflow-hidden rounded-2xl bg-slate-100 aspect-[4/5] relative">
-          <img 
-            src="/tmp-images/galerija-1.webp" 
-            alt="Detalj spomenika 1" 
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
+    <p class="page-source">
+      <span>{page.sourceLabel}:</span>
+      {page.source}
+    </p>
 
-        <div class="group overflow-hidden rounded-2xl bg-slate-100 aspect-[4/5] relative">
-          <img 
-            src="/tmp-images/galerija-2.avif" 
-            alt="Detalj spomenika 2" 
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
-
-        <div class="group overflow-hidden rounded-2xl bg-slate-100 aspect-[4/5] relative">
-          <img 
-            src="/tmp-images/galerija-3.jpg" 
-            alt="Detalj spomenika 3" 
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
-
+    <section class="monument-gallery" aria-labelledby="gallery-title">
+      <div class="gallery-heading">
+        <p class="eyebrow">{page.galleryEyebrow}</p>
+        <h2 id="gallery-title">{page.galleryTitle}</h2>
+        <div class="title-separator"></div>
       </div>
-    </div>
-
-    <footer class="py-24 border-t border-slate-100 bg-slate-50/30 text-center">
-      <a href="/" class="group inline-flex flex-col items-center">
-        <span class="text-slate-400 group-hover:text-blue-950 transition-colors uppercase tracking-[0.4em] text-[10px] font-black">Povratak na navigaciju</span>
-        <div class="w-12 h-px bg-slate-200 mt-4 group-hover:w-24 group-hover:bg-orange-500 transition-all duration-500"></div>
-      </a>
-    </footer>
-
+      <div class="gallery-grid">
+        {galleryImages.map((src, index) => (
+          <figure>
+            <img src={src} alt={page.imageAlts[index]} loading="lazy" />
+          </figure>
+        ))}
       </div>
-    </div>
-
-
+    </section>
   </main>
 </PageLayout>
+
+<style>
+  .monument-page {
+    min-height: 100vh;
+    background: #fff;
+    color: #334155;
+    font-family: "Atkinson", sans-serif;
+  }
+
+  .monument-hero {
+    position: relative;
+    display: flex;
+    min-height: clamp(580px, 78vh, 760px);
+    align-items: flex-end;
+    overflow: hidden;
+    background: #172554;
+  }
+
+  .monument-hero > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .monument-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgb(15 23 42 / 88%) 0%, rgb(15 23 42 / 50%) 48%, rgb(15 23 42 / 8%) 78%),
+      linear-gradient(0deg, rgb(15 23 42 / 55%) 0%, transparent 48%);
+  }
+
+  .monument-hero__content {
+    position: relative;
+    z-index: 1;
+    width: min(1180px, 90%);
+    margin: 0 auto;
+    padding: 9rem 0 5rem;
+    color: #fff;
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--pumpkin-orange);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .monument-hero h1 {
+    max-width: 760px;
+    margin: 0.45rem 0 0;
+    color: #fff;
+    font-family: "Exo2", sans-serif;
+    font-size: clamp(2.7rem, 7vw, 5.2rem);
+    font-weight: 700;
+    line-height: 1.02;
+  }
+
+  .title-separator {
+    width: 5rem;
+    height: 0.25rem;
+    margin: 1.2rem 0;
+    background: var(--pumpkin-orange);
+  }
+
+  .monument-hero__intro {
+    max-width: 650px;
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    line-height: 1.55;
+  }
+
+  .monument-content {
+    display: grid;
+    width: min(1120px, 90%);
+    margin: 0 auto;
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    grid-template-columns: minmax(0, 2fr) minmax(250px, 0.8fr);
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .story {
+    min-width: 0;
+  }
+
+  .story-section + .story-section {
+    margin-top: 4.5rem;
+    padding-top: 4.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .story-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .story-heading > span {
+    flex: 0 0 auto;
+    color: var(--pumpkin-orange);
+    font-family: "Exo2", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .story h2,
+  .facts h2,
+  .gallery-heading h2 {
+    margin: 0;
+    color: #172554;
+    font-family: "Exo2", sans-serif;
+    font-weight: 700;
+  }
+
+  .story h2 {
+    font-size: clamp(1.6rem, 3vw, 2.15rem);
+  }
+
+  .story-section > p {
+    margin: 0;
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .story-section > p + p {
+    margin-top: 1.2rem;
+  }
+
+  blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem 1.75rem;
+    border-left: 5px solid var(--pumpkin-orange);
+    background: #f8fafc;
+    color: #172554;
+    font-family: "Exo2", sans-serif;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  .facts {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .facts-card {
+    padding: 1.4rem;
+    border-top: 4px solid var(--pumpkin-orange);
+    background: #f8fafc;
+  }
+
+  .facts h2 {
+    font-size: 1.2rem;
+  }
+
+  .facts dl {
+    margin: 1.2rem 0 0;
+  }
+
+  .facts dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .facts dt {
+    color: #64748b;
+  }
+
+  .facts dd {
+    margin: 0;
+    color: #172554;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .author-card {
+    margin-top: 1rem;
+    padding: 1.4rem;
+    background: #172554;
+    color: #fff;
+  }
+
+  .author-card p {
+    margin: 0 0 0.25rem;
+    color: #cbd5e1;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .author-card strong {
+    font-family: "Exo2", sans-serif;
+    font-size: 1.25rem;
+  }
+
+  .page-source {
+    width: min(1120px, 90%);
+    margin: -3rem auto 4rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .page-source span {
+    color: #172554;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .monument-gallery {
+    padding: clamp(4rem, 8vw, 6.5rem) max(5%, calc((100% - 1180px) / 2));
+    background: #f8fafc;
+  }
+
+  .gallery-heading {
+    margin-bottom: 2rem;
+  }
+
+  .gallery-heading h2 {
+    margin-top: 0.35rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-grid figure {
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: #e2e8f0;
+  }
+
+  .gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-grid figure:hover img {
+    transform: scale(1.035);
+  }
+
+  @media (max-width: 760px) {
+    .monument-hero {
+      min-height: 620px;
+    }
+
+    .monument-hero > img {
+      object-position: 62% center;
+    }
+
+    .monument-hero__overlay {
+      background: linear-gradient(0deg, rgb(15 23 42 / 92%) 0%, rgb(15 23 42 / 38%) 65%, rgb(15 23 42 / 12%) 100%);
+    }
+
+    .monument-hero__content {
+      width: calc(100% - 2rem);
+      padding-bottom: 2.5rem;
+    }
+
+    .monument-content {
+      width: calc(100% - 2rem);
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .page-source {
+      width: calc(100% - 2rem);
+      margin-top: -1rem;
+      margin-bottom: 3rem;
+    }
+
+    .story-section + .story-section {
+      margin-top: 3rem;
+      padding-top: 3rem;
+    }
+
+    .story-heading {
+      gap: 0.7rem;
+    }
+
+    .facts {
+      position: static;
+    }
+
+    .monument-gallery {
+      padding-inline: 1rem;
+    }
+
+    .gallery-grid {
+      display: flex;
+      padding-bottom: 0.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+
+    .gallery-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-grid figure {
+      min-width: min(78vw, 300px);
+      scroll-snap-align: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-grid img {
+      transition: none;
+    }
+  }
+</style>
