@@ -131,6 +131,32 @@ try {
       <div class="absolute inset-0 bg-gradient-to-l max-sm:bg-gradient-to-b from-transparent from-50% to-white"></div>
     </div>
   </div>
+  <!-- Active escape -->
+  <div class="flex max-sm:flex-col lg:h-screen overflow-hidden observed">
+    <div class="relative w-3/5 max-sm:w-screen fade slide-left">
+      <img
+        src="/images/organizations/adrenalinskipark/adrenalinskipark.jpg"
+        alt=""
+        width="100%"
+        class="z-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r max-sm:bg-gradient-to-b from-transparent from-50% to-white"></div>
+    </div>
+    <div class="relative w-2/5 max-sm:w-screen z-10 items-center -ml-20 max-sm:ml-0 mt-[120px] max-sm:-mt-40 text-blue-950 max-sm:p-4 fade slide-bottom">
+      <h2 class="text-3xl font-exo2 font-bold mb-2 text-blue-950">{tr.index.section3_title}</h2>
+      <div class="ttl-sep w-20 h-1 bg-orange-500 my-2"></div>
+      <p class="mt-5 text-[18px]">{tr.index.section3_p1}</p>
+      <p class="mt-4 text-[18px]">{tr.index.section3_p2}</p>
+      <a href="/map">
+        <button
+          class="bg-blue-950 px-10 py-2 mt-5 text-white"
+          style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
+        >
+          {tr.index.section3_btn}
+        </button>
+      </a>
+    </div>
+  </div>
   {serviceWeather && (
     <section class="service-section">
       <aside class="service-card" aria-labelledby="service-title">
