@@ -54,6 +54,9 @@ export const bs = {
         title: "Novosti",
         description: "Pratite najnovije priče, projekte i dešavanja sa Smetova.",
         read_more: "Pročitaj više",
+        shared_by: "Objavila organizacija",
+        original_post: "Pogledaj izvornu objavu",
+        source_note: "Ova novost je prenesena uz navođenje izvornog objavljivača.",
     },
     events: {
         title: "Događaji",

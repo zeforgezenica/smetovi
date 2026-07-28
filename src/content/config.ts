@@ -9,6 +9,9 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
     photoAuthor: z.string().optional(),
+    sourceName: z.string().optional(),
+    sourceUrl: z.string().url().optional(),
+    sourcePlatform: z.enum(["facebook", "website"]).optional(),
   }),
 });
 

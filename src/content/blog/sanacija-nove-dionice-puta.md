@@ -3,7 +3,9 @@ title: "Sanacija i asfaltiranje nove dionice puta prema Smetovima, ZDK ulaže ok
 description: "Sanacija i asfaltiranje nove dionice puta prema Smetovima, ZDK ulaže oko 6.000.000 KM u cestovnu infrastrukturu u Zenici"
 pubDate: "Mar 10 2026"
 heroImage: "/images/blog/smetovi-zenica.jpg"
-photoAuthor: "Adnan Šabani"
+sourceName: "RADIO ZENIT"
+sourceUrl: "https://www.facebook.com/zenitzenica/posts/1596400908527661/"
+sourcePlatform: "facebook"
 ---
 
 Radovi na sanaciji i asfaltiranju lokalne ceste koja vodi prema zeničkom izletištu Smetovi uskoro će biti završeni. U okviru ovog projekta planirana je potpuna sanacija i asfaltiranje dionice puta u dužini od oko 1.300 metara, na pravcu od naselja Peševići prema Smetovima. U prethodne dvije godine Ministarstvo za prostorno uređenje, promet i komunikacije i zaštitu okoline Zeničko-dobojskog kantona, zajedno sa Kantonalnom direkcijom za ceste, već je uložilo oko 800.000 KM u sanaciju ove putne dionice.

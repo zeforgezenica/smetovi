@@ -47,6 +47,21 @@ const tr = t(lang);
                     <p class="date mb-0 text-gray-400">
                       <FormattedDate date={post.data.pubDate} />
                     </p>
+                    {
+                      post.data.sourceName && (
+                        <span class="mb-2 inline-flex items-center gap-2 border-l-4 border-orange-500 pl-2 text-sm font-bold text-sky-950">
+                          <i
+                            class={
+                              post.data.sourcePlatform === "facebook"
+                                ? "fa-brands fa-facebook text-orange-500"
+                                : "fa-solid fa-building text-orange-500"
+                            }
+                            aria-hidden="true"
+                          />
+                          {tr.blog.shared_by}: {post.data.sourceName}
+                        </span>
+                      )
+                    }
                     <h4 class="title font-bold font-exo2 text-lg text-sky-950 sm:text-base md:text-xl lg:text-2xl xl:text-3xl">
                       {post.data.title}
                     </h4>

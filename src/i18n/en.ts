@@ -56,6 +56,9 @@ export const en: Translations = {
         title: "News",
         description: "Follow the latest stories, projects and events from Smetovi.",
         read_more: "Read more",
+        shared_by: "Published by",
+        original_post: "View original post",
+        source_note: "This news item is republished with attribution to its original publisher.",
     },
     events: {
         title: "Events",

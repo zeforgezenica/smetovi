@@ -4,6 +4,9 @@ description: "Završena sanacija i asfaltiranje puta prema sportsko-rekreativnom
 pubDate: "Apr 30 2025"
 heroImage: "/images/blog/asfaltiranje-puta.jpg"
 photoAuthor: "Fuad Kasumović"
+sourceName: "Grad Zenica"
+sourceUrl: "https://zenica.ba/zavrsena-sanacija-i-asfaltiranje-puta-prema-sportsko-rekreativnom-i-turistickom-centru-smetovi/"
+sourcePlatform: "website"
 ---
 
 Radovi na sanaciji i asfaltiranju lokalne ceste koja vodi ka sportsko-rekreativnom i turističkom centru Smetovi uspješno su privedeni kraju. U okviru prve faze uređena je i asfaltirana dionica puta u dužini od 1.200 metara, od Eko-kuće do platoa Smetova. Izvođač radova je preduzeće “KOMGRAD-ZE” d.o.o. Zenica, a ukupna vrijednost investicije iznosi 398.333,75 KM.
@@ -21,5 +24,3 @@ Pomoćnica Emina Kurtagić najavila je nastavak radova kroz drugu fazu projekta,
 “S obzirom na značaj Smetova kao turističkog potencijala, Gradska uprava će nastaviti ulaganja u ovo područje. U planu je da se, kao naredni korak, asfaltira dodatnih 3 kilometra puta – od grada prema skretanju za naselje Peševići”, naglasila je Kurtagić.
 
 Ova ulaganja predstavljaju značajan doprinos razvoju turizma i rekreacije na području Zenice, posebno za brojne posjetitelje koji tokom cijele godine borave na Smetovima, uključujući i aktivnosti zeničkih izviđača u novootvorenoj Eko-kući.
-
-Izvor: https://zenica.ba/zavrsena-sanacija-i-asfaltiranje-puta-prema-sportsko-rekreativnom-i-turistickom-centru-smetovi/

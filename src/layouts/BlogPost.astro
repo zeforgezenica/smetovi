@@ -2,9 +2,22 @@
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import PageLayout from "./PageLayout.astro";
+import { getLangFromCookie } from "../i18n/server";
+import { t } from "../i18n";
 
 type Props = CollectionEntry<"blog">["data"];
-const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  heroImage,
+  photoAuthor,
+  sourceName,
+  sourceUrl,
+  sourcePlatform,
+} = Astro.props;
+const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
+const tr = t(lang);
 ---
 
 <PageLayout
@@ -36,6 +49,37 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
           </h2>
         </div>
         <slot />
+        {
+          sourceName && sourceUrl && (
+            <aside class="source-card" aria-label={tr.blog.shared_by}>
+              <div class="source-icon" aria-hidden="true">
+                <i
+                  class={
+                    sourcePlatform === "facebook"
+                      ? "fa-brands fa-facebook-f"
+                      : "fa-solid fa-building"
+                  }
+                />
+              </div>
+              <div class="source-content">
+                <span>{tr.blog.shared_by}</span>
+                <strong>{sourceName}</strong>
+                <p>{tr.blog.source_note}</p>
+              </div>
+              <a
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="source-link"
+              >
+                <span>
+                  {tr.blog.original_post}
+                  <span aria-hidden="true">↗</span>
+                </span>
+              </a>
+            </aside>
+          )
+        }
       </div>
     </article>
   </main>
@@ -83,6 +127,82 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
     text-align: left;
   }
 
+  .source-card {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 3rem;
+    border: 1px solid #f3f4f6;
+    border-left: 4px solid #f97316;
+    border-radius: 1.5rem;
+    background: white;
+    padding: 1.4rem 13rem 1.4rem 1.4rem;
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+  }
+
+  .source-icon {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 0.85rem;
+    background: #f0f9ff;
+    color: #082f49;
+    font-size: 1.2rem;
+  }
+
+  .source-content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .source-content span {
+    color: #f97316;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .source-content strong {
+    color: #082f49;
+    font-family: "Exo2", sans-serif;
+    font-size: 1.05rem;
+  }
+
+  .source-content p {
+    margin: 0.15rem 0 0;
+    color: #64748b;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .source-link {
+    position: absolute;
+    top: 50%;
+    right: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #082f49;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-50%);
+  }
+
+  .source-link:hover {
+    color: #f97316;
+  }
+
+  .source-link:focus-visible {
+    outline: 3px solid #f97316;
+    outline-offset: 3px;
+  }
+
   @media (max-width: 768px) {
     .image-container {
       height: 50vh;
@@ -91,6 +211,19 @@ const { title, description, pubDate, heroImage, photoAuthor } = Astro.props;
     .prose {
       padding: 1.5em;
       margin-top: 1.5em;
+    }
+
+    .source-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      padding: 1.25rem;
+    }
+
+    .source-link {
+      position: static;
+      grid-column: 1 / -1;
+      margin-top: 0.25rem;
+      transform: none;
     }
   }
 </style>
