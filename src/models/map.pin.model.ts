@@ -5,5 +5,6 @@ export interface MapPin {
   title: string;
   location: LatLngTuple;
   path?: string;
-  img: string;
+  img?: string;
+  mapUrl?: string;
 }

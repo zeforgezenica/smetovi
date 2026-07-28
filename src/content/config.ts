@@ -12,7 +12,7 @@ const blog = defineCollection({
   }),
 });
 
-const organization = defineCollection({
+const organizations = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
@@ -22,10 +22,7 @@ const organization = defineCollection({
     contact: z.string().optional(),
     description: z.string(),
     heroImage: z.string().optional(),
-    location: z.object({
-      lat: z.number(),
-      lng: z.number(),
-    }),
+    location: z.tuple([z.number(), z.number()]),
     mapUrl: z.string(),
     facebook: z.string().optional(),
     facebookUrl: z.string().optional(),
@@ -45,4 +42,4 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { blog, organization, events };
+export const collections = { blog, organizations, events };

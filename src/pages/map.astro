@@ -16,6 +16,7 @@ const pins: MapPin[] = organizations.map((org) => ({
   location: org.data.location,
   path: `/organizations/${org.slug}/`,
   img: org.data.heroImage,
+  mapUrl: org.data.mapUrl,
 }));
 ---
 
@@ -25,7 +26,21 @@ const pins: MapPin[] = organizations.map((org) => ({
   includeFooter={false}
 >
   <main>
-    <MapComponent client:load {pins} />
+    <MapComponent
+      client:load
+      {pins}
+      labels={{
+        details: lang === "en" ? "Details" : "Detalji",
+        navigation: lang === "en" ? "Directions" : "Navigacija",
+        legend: lang === "en" ? "Map legend" : "Legenda mape",
+        food: lang === "en" ? "Food" : "Hrana",
+        accommodation: lang === "en" ? "Accommodation" : "Smještaj",
+        activities: lang === "en" ? "Activities" : "Aktivnosti",
+        services: lang === "en" ? "Services and education" : "Službe i edukacija",
+        parking: lang === "en" ? "Parking" : "Parking",
+        resort: lang === "en" ? "Smetovi memorial" : "Spomenik Smetovi",
+      }}
+    />
   </main>
 </PageLayout>
 
