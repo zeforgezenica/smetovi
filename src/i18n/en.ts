@@ -16,6 +16,7 @@ export const en: Translations = {
     },
     index: {
         hero_alt: "Smetovi Logo",
+        hero_title: "Smetovi – Zenica's mountain oasis",
         hero_explore: "Explore Smetovi",
         meta_title: "Smetovi | A mountain oasis near Zenica",
         meta_description: "Explore Smetovi, Zenica's favorite destination for walking, recreation, nature and winter activities.",
@@ -23,6 +24,7 @@ export const en: Translations = {
         section1_p1: "Smetovi, a mountain located in the municipality of Zenica, rises to 1,025 meters above sea level, approximately 8 kilometers from the city center. This popular excursion spot offers hiking trails, cycling, winter sports and sports courts, along with a restaurant, accommodation and a sports-recreation center.",
         section1_p2: "At the mountain's peak stands a monument to the fighters of the Zenica Partisan Detachment, erected in 1968. On a clear day, Smetovi offers views stretching up to 100 km, encompassing mountains such as Zvijezda, Vranica and Vlašić. The mountaineering society 'Željezara' manages the mountain lodge, situated along the Mračaja stream at 940 meters above sea level.",
         section1_btn: "Map",
+        monument_btn: "About the monument",
         section2_title: "NATURE OF SMETOVI",
         section2_p1: "The natural beauty of Smetovi is complemented by its ecological significance. Smetovi is home to a diverse range of plant and animal life, making it an important area for the preservation of biodiversity.",
         section2_p2: "For those visiting Zenica, a trip to Smetovi is not just hiking; it is an opportunity to connect with nature, experience the beauty of the Bosnian landscape and enjoy various outdoor activities. Smetovi not only offers a refreshing escape from urban life, but also provides a space for physical and mental rejuvenation, making it a precious natural treasure of the region.",

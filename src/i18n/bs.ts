@@ -14,6 +14,7 @@ export const bs = {
     },
     index: {
         hero_alt: "Smetovi Logo",
+        hero_title: "Smetovi – Zenička planinska oaza",
         hero_explore: "Istraži Smetove",
         meta_title: "Smetovi | Planinska oaza nadomak Zenice",
         meta_description: "Istražite Smetove, omiljeno zeničko izletište za šetnju, rekreaciju, prirodu i zimske aktivnosti.",
@@ -21,6 +22,7 @@ export const bs = {
         section1_p1: "Smetovi, planina smještena u općini Zenica, uzdiže se na 1.025 metara nadmorske visine, oko 8 kilometara od centra grada. Popularno izletište nudi staze za šetnju, biciklizam, zimske sportove i sportske terene, uz restoran, prenoćište i sportsko-rekreacijski centar.",
         section1_p2: "Na vrhu planine nalazi se spomenik borcima Zeničkog partizanskog odreda iz 1968. godine. Sa Smetova se, za vedrog dana, pruža pogled do 100 km, obuhvatajući planine poput Zvijezde, Vranice i Vlašića. Planinarsko društvo 'Željezara' vodi planinarski dom, smješten uz potok Mračaja na 940 metara nadmorske visine.",
         section1_btn: "Mapa",
+        monument_btn: "Više o spomeniku",
         section2_title: "PRIRODA SMETOVA",
         section2_p1: "Prirodna ljepota Smetova nadopunjuje se njegovim ekološkim značajem. Smetovi su dom raznolikom biljnom i životinjskom svijetu, čineći ga važnim područjem za očuvanje biološke raznolikosti.",
         section2_p2: "Za one koji posjećuju Zenicu, putovanje do Smetova nije samo planinarenje; to je prilika za povezivanje s prirodom, doživljaj ljepote bosanskog krajolika i uživanje u raznim aktivnostima na otvorenom. Smetovi ne nude samo osvježavajući bijeg od gradske vreve, već pružaju prostor za fizičko i mentalno osvježenje, čineći ga dragocjenim prirodnim blagom regije.",

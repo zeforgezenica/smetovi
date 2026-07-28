@@ -32,7 +32,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ lang = "bs" }) => {
             <a href="/organizations" className={isActive("/organizations") ? "active" : ""} aria-current={isActive("/organizations") ? "page" : undefined}>{tr.nav.organizations}</a>
             <a href="/events" className={isActive("/events") ? "active" : ""} aria-current={isActive("/events") ? "page" : undefined}>{tr.nav.events}</a>
             <a href="/contact" className={isActive("/contact") ? "active" : ""} aria-current={isActive("/contact") ? "page" : undefined}>{tr.nav.contact}</a>
-            <a href="/Images" className={isActive("/Images") ? "active" : ""} aria-current={isActive("/Images") ? "page" : undefined}>{tr.nav.images}</a>
+            <a href="/gallery" className={isActive("/gallery") ? "active" : ""} aria-current={isActive("/gallery") ? "page" : undefined}>{tr.nav.images}</a>
           </nav>
         </div>
       </div>
