@@ -22,7 +22,6 @@
     "@fullcalendar/interaction": "^6.1.19",
     "@fullcalendar/react": "^6.1.19",
     "astro": "^4.16.16",
-    "axios": "^1.7.9",
     "leaflet": "^1.9.4",
     "my-astro-app": "file:",
     "nanostores": "^1.1.0",
