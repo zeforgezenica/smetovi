@@ -4,4 +4,5 @@ description: "Otvaranje ljetnje sezone planinarenja, duga ruta preko cijelih Sme
 datetime: "2026-03-15T10:00:00Z"
 location: "Spomenik Smetovi"
 category: "Sport"
+draft: true
 ---

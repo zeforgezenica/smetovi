@@ -8,16 +8,22 @@ import { getLangFromCookie } from "../i18n/server";
 interface Props {
   siteTitle?: string;
   siteDescription?: string;
+  socialImage?: string;
   includeFooter?: boolean;
 }
 
-const { siteTitle, siteDescription, includeFooter = true } = Astro.props;
+const { siteTitle, siteDescription, socialImage, includeFooter = true } = Astro.props;
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 ---
 
 <!doctype html>
 <html lang={lang}>
-  <BaseHead title={siteTitle} description={siteDescription} lang={lang} />
+  <BaseHead
+    title={siteTitle}
+    description={siteDescription}
+    image={socialImage}
+    lang={lang}
+  />
 
   <body>
     <Header />

@@ -39,6 +39,7 @@ const events = defineCollection({
     datetime: z.coerce.date(),
     location: z.string(),
     category: z.string().optional(),
+    draft: z.boolean().default(false),
   }),
 });
 

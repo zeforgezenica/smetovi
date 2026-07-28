@@ -5,7 +5,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { getLangFromCookie } from "../i18n/server";
 import { t } from "../i18n";
 
-const eventsRaw = await getCollection("events");
+const eventsRaw = await getCollection("events", ({ data }) => !data.draft);
 const events = eventsRaw.sort(
   (a, b) =>
     new Date(a.data.datetime).getTime() - new Date(b.data.datetime).getTime(),
@@ -13,6 +13,10 @@ const events = eventsRaw.sort(
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
 const dateLocale = lang === "bs" ? "bs-BA" : "en-GB";
+const noEventsMessage =
+  lang === "bs"
+    ? "Trenutno nema najavljenih događaja."
+    : "There are currently no announced events.";
 ---
 
 <PageLayout
@@ -36,6 +40,13 @@ const dateLocale = lang === "bs" ? "bs-BA" : "en-GB";
         </h2>
 
         <div class="space-y-6">
+          {
+            events.length === 0 && (
+              <p class="border-l-4 border-orange-500 bg-white p-5 text-gray-600 shadow-sm">
+                {noEventsMessage}
+              </p>
+            )
+          }
           {
             events.map((event) => {
               const date = new Date(event.data.datetime);

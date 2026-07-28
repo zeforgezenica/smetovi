@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smetovi.ba/sitemap-index.xml

@@ -38,15 +38,13 @@ const copyright = tr.footer.copyright.replace('{year}', String(today.getFullYear
 			</div>
 			<div class="w-full md:w-2/5 flex flex-col justify-start mb-auto">
 				<h3 class="font-exo2 text-[#eee] mb-5">{tr.footer.newsletter}</h3>
-				<form action="" class="newsletter-form flex flex-row">
-					<input
-						placeholder="e-mail"
-						class="email-input px-2 flex-grow bg-gray-light text-[#eee] placeholder-[#eee] focus:outline-none"
-					/>
-					<button class="submit-newsletter bg-gray-light text-[#eee] cursor-pointer text-center px-2.5 py-0 hover:bg-gray-hover">
-						<i class="fa-solid fa-arrow-right relative top-0.5"></i>
-					</button>
-				</form>
+				<a
+					href="/contact#newsletterForm"
+					class="inline-flex w-fit items-center gap-3 bg-gray-light px-4 py-2 text-[#eee] no-underline transition-colors hover:bg-gray-hover hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+				>
+					{tr.contact.subscribe}
+					<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+				</a>
 			</div>
 		</div>
 		<div class="copyright text-center p-2 w-full text-[#eee]">
