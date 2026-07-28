@@ -82,7 +82,7 @@ try {
      <div class="flex flex-wrap gap-4 mt-5">
         <a
           href="/map"
-          class="inline-block bg-blue-950 px-10 py-2 text-white no-underline"
+          class="home-cta home-cta--primary inline-block bg-blue-950 px-10 py-2 text-white no-underline"
           style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
         >
           {tr.index.section1_btn}
@@ -90,7 +90,7 @@ try {
 
         <a
           href="/spomenik"
-          class="inline-block bg-orange-500 px-10 py-2 text-white font-bold no-underline hover:bg-orange-600 transition-colors"
+          class="home-cta home-cta--secondary inline-block px-10 py-2 text-white font-bold no-underline"
           style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
         >
           {tr.index.monument_btn}
@@ -108,7 +108,7 @@ try {
       <p class="mt-4 text-[18px]">{tr.index.section2_p2}</p>
       <a
         href="/gallery"
-        class="inline-block bg-blue-950 px-10 py-2 mt-5 text-white no-underline"
+        class="home-cta home-cta--primary inline-block bg-blue-950 px-10 py-2 mt-5 text-white no-underline"
         style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
       >
         {tr.index.section2_btn}
@@ -147,7 +147,7 @@ try {
       <p class="mt-4 text-[18px]">{tr.index.section3_p2}</p>
       <a
         href="/map"
-        class="inline-block bg-blue-950 px-10 py-2 mt-5 text-white no-underline"
+        class="home-cta home-cta--primary inline-block bg-blue-950 px-10 py-2 mt-5 text-white no-underline"
         style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"
       >
         {tr.index.section3_btn}
@@ -236,6 +236,29 @@ try {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2;
+  }
+  .home-cta {
+    box-shadow: 0 5px 12px rgb(15 23 42 / 10%);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .home-cta:hover {
+    color: #fff;
+    box-shadow: 0 8px 18px rgb(15 23 42 / 18%);
+    transform: translateY(-2px);
+  }
+  .home-cta--primary:hover {
+    background-color: var(--pumpkin-orange);
+  }
+  .home-cta--secondary {
+    background-color: var(--pumpkin-orange);
+  }
+  .home-cta--secondary:hover {
+    background-color: #172554;
+  }
+  .home-cta:focus-visible {
+    color: #fff;
+    outline: 3px solid var(--pumpkin-orange);
+    outline-offset: 3px;
   }
   .service-section {
     padding: 3.5rem 1rem;
