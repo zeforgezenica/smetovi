@@ -25,6 +25,11 @@ export const bs = {
         section2_p1: "Prirodna ljepota Smetova nadopunjuje se njegovim ekološkim značajem. Smetovi su dom raznolikom biljnom i životinjskom svijetu, čineći ga važnim područjem za očuvanje biološke raznolikosti.",
         section2_p2: "Za one koji posjećuju Zenicu, putovanje do Smetova nije samo planinarenje; to je prilika za povezivanje s prirodom, doživljaj ljepote bosanskog krajolika i uživanje u raznim aktivnostima na otvorenom. Smetovi ne nude samo osvježavajući bijeg od gradske vreve, već pružaju prostor za fizičko i mentalno osvježenje, čineći ga dragocjenim prirodnim blagom regije.",
         section2_btn: "Istraži prirodu",
+        service_title: "Trenutno na Smetovima",
+        road_estimate: "Procjena puta",
+        road_passable: "Prohodna",
+        road_difficult: "Otežano",
+        weather_details: "Detaljna prognoza",
     },
     organizations: {
         title: "Organizacije",

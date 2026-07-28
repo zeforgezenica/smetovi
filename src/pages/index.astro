@@ -2,9 +2,49 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import { getLangFromCookie } from "../i18n/server";
 import { t } from "../i18n";
+import { getWeatherIcon } from "../components/WeatherComponent/weatherIconMap";
 
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
+
+interface ServiceWeather {
+  temperature: number;
+  code: number;
+  difficult: boolean;
+}
+
+interface ServiceWeatherResponse {
+  current: {
+    temperature_2m: number;
+    precipitation_probability: number;
+    weather_code: number;
+  };
+}
+
+let serviceWeather: ServiceWeather | null = null;
+
+try {
+  const weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=44.2447&longitude=17.9781&current=temperature_2m,precipitation_probability,weather_code&timezone=Europe%2FSarajevo";
+  const response = await fetch(weatherUrl);
+
+  if (response.ok) {
+    const data = (await response.json()) as ServiceWeatherResponse;
+    const current = data.current;
+    const snowCodes = [71, 73, 75, 77, 85, 86];
+    const iceCodes = [56, 57, 66, 67];
+    const difficult = snowCodes.includes(current.weather_code)
+      || iceCodes.includes(current.weather_code)
+      || (current.temperature_2m <= 0 && current.precipitation_probability > 20);
+
+    serviceWeather = {
+      temperature: Math.round(current.temperature_2m),
+      code: current.weather_code,
+      difficult,
+    };
+  }
+} catch (error) {
+  console.error("Homepage weather fetch failed:", error);
+}
 ---
 
 <PageLayout
@@ -91,6 +131,33 @@ const tr = t(lang);
       <div class="absolute inset-0 bg-gradient-to-l max-sm:bg-gradient-to-b from-transparent from-50% to-white"></div>
     </div>
   </div>
+  {serviceWeather && (
+    <section class="service-section">
+      <aside class="service-card" aria-labelledby="service-title">
+        <div class="service-weather">
+          <img
+            src={getWeatherIcon(serviceWeather.code)}
+            alt=""
+            aria-hidden="true"
+          />
+          <div>
+            <p id="service-title">{tr.index.service_title}</p>
+            <strong>{serviceWeather.temperature}°C</strong>
+          </div>
+        </div>
+        <div class="service-road">
+          <span>{tr.index.road_estimate}</span>
+          <strong class:list={{ difficult: serviceWeather.difficult }}>
+            {serviceWeather.difficult ? tr.index.road_difficult : tr.index.road_passable}
+          </strong>
+        </div>
+        <a href="/weather">
+          {tr.index.weather_details}
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </aside>
+    </section>
+  )}
 </PageLayout>
 
 <style>
@@ -147,6 +214,85 @@ const tr = t(lang);
     stroke-linejoin: round;
     stroke-width: 2;
   }
+  .service-section {
+    padding: 3.5rem 1rem;
+    background: #fff;
+  }
+  .service-card {
+    display: grid;
+    width: min(1050px, 100%);
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    grid-template-columns: minmax(220px, 1fr) minmax(250px, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+    background: #fff;
+    color: #172554;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .service-weather {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .service-weather img {
+    width: 3.6rem;
+    height: 3.6rem;
+    object-fit: contain;
+  }
+  .service-weather p,
+  .service-road span {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .service-weather strong {
+    display: block;
+    margin-top: 0.1rem;
+    color: #111827;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .service-road {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0;
+    padding: 0 2rem;
+    border-right: 1px solid #e5e7eb;
+    border-left: 1px solid #e5e7eb;
+  }
+  .service-road strong {
+    padding: 0.38rem 0.7rem;
+    border-radius: 999px;
+    background: #16a34a;
+    color: white;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .service-road strong.difficult {
+    background: #ea580c;
+  }
+  .service-card > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    white-space: nowrap;
+    color: #ea580c;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .service-card > a:hover {
+    color: #c2410c;
+  }
   #upoznaj-smetove {
     scroll-margin-top: 3.5rem;
   }
@@ -164,6 +310,30 @@ const tr = t(lang);
   .slide-right { transform: translateX(50px); }
   .slide-bottom { transform: translateY(50px); }
   .show { opacity: 1; transform: translateX(0); }
+  @media (max-width: 760px) {
+    .service-section {
+      padding: 2rem 1rem;
+    }
+    .service-card {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 1rem;
+    }
+    .service-road {
+      margin-top: 0.85rem;
+      padding: 0.8rem 0;
+      border-top: 1px solid #e5e7eb;
+      border-right: 0;
+      border-bottom: 1px solid #e5e7eb;
+      border-left: 0;
+    }
+    .service-card > a {
+      margin-top: 0.85rem;
+    }
+    .explore-link {
+      bottom: 1.5rem;
+    }
+  }
 </style>
 
 <script>

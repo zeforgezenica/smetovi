@@ -27,6 +27,11 @@ export const en: Translations = {
         section2_p1: "The natural beauty of Smetovi is complemented by its ecological significance. Smetovi is home to a diverse range of plant and animal life, making it an important area for the preservation of biodiversity.",
         section2_p2: "For those visiting Zenica, a trip to Smetovi is not just hiking; it is an opportunity to connect with nature, experience the beauty of the Bosnian landscape and enjoy various outdoor activities. Smetovi not only offers a refreshing escape from urban life, but also provides a space for physical and mental rejuvenation, making it a precious natural treasure of the region.",
         section2_btn: "Explore nature",
+        service_title: "Currently on Smetovi",
+        road_estimate: "Road estimate",
+        road_passable: "Passable",
+        road_difficult: "Difficult",
+        weather_details: "Detailed forecast",
     },
     organizations: {
         title: "Organizations",
