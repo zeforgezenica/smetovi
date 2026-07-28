@@ -1,7 +1,7 @@
 ---
 const today = new Date();
-const { title, description, image = '/bgfooteribg.png' } = Astro.props;
-const { title2, description2, image2 = '/bgfootersmall.png' } = Astro.props;
+const image = '/bgfooteribg.png';
+const image2 = '/bgfootersmall.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { getLangFromCookie } from '../i18n/server';
 import { t } from '../i18n';

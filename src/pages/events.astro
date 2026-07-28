@@ -109,7 +109,7 @@ const dateLocale = lang === "bs" ? "bs-BA" : "en-GB";
           <p class="text-gray-500 text-sm">{tr.events.calendar_hint}</p>
         </div>
 
-        <EventCalendar events={events} lang={lang} client:only="react" />
+        <EventCalendar events={events} lang={lang} client:visible />
       </section>
     </div>
   </main>

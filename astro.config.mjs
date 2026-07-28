@@ -13,11 +13,25 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), react(), tailwind()],
   output: 'server',
   adapter: cloudflare({
+    imageService: 'passthrough',
     platformProxy: {
       enabled: true
     }
   }),
   vite: {
-    plugins: [tailwind()]
+    plugins: [tailwind()],
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (
+            warning.code === 'EMPTY_BUNDLE' &&
+            warning.message.includes('astro/env-setup')
+          ) {
+            return;
+          }
+          warn(warning);
+        },
+      },
+    },
   }
 });
