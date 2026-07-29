@@ -105,7 +105,7 @@ export const en: Translations = {
     },
     gallery: {
         title: "Smetovi gallery",
-        description: "Browse photographs of the nature, landscapes and landmarks of Smetovi.",
+        description: "Experience the nature, landscapes and landmarks of Smetovi through videos and photographs by our contributors.",
     },
     footer: {
         contact_info: "CONTACT INFORMATION",

@@ -103,7 +103,7 @@ export const bs = {
     },
     gallery: {
         title: "Galerija Smetova",
-        description: "Pogledajte fotografije prirode, pejzaža i znamenitosti Smetova.",
+        description: "Doživite prirodu, pejzaže i znamenitosti Smetova kroz videozapise i fotografije naših autora.",
     },
     footer: {
         contact_info: "KONTAKT INFORMACIJE",

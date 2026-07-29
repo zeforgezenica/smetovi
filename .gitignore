@@ -20,5 +20,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# local source photographs
+photo-inbox/
+
+# local source videos
+video-inbox/
+
 # jetbrains setting folder
 .idea/

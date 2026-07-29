@@ -7,62 +7,47 @@ import { t } from "../i18n";
 const lang = getLangFromCookie(Astro.cookies.get("lang")?.value);
 const tr = t(lang);
 
-const images = [
+const imageDefinitions = [
+  ["eko-kuca-i-plato-iz-zraka.jpg", "Eko kuća i plato iz zraka", "Eko House and plateau from the air"],
+  ["spomenik-i-plato-iz-zraka.jpg", "Spomenik i plato iz zraka", "The monument and plateau from the air"],
+  ["put-kroz-smetove.jpg", "Put kroz jesenji pejzaž Smetova", "A road through the autumn landscape"],
+  ["spomenik-pod-snijegom.jpg", "Spomenik pod snijegom", "The monument under snow"],
+  ["smetovi-iznad-oblaka.jpg", "Smetovi iznad oblaka", "Smetovi above the clouds"],
+  ["jesenja-panorama.jpg", "Jesenja panorama Smetova", "An autumn panorama of Smetovi"],
+  ["zimski-put-kroz-sumu.jpg", "Zimski put kroz šumu", "A winter road through the forest"],
+  ["stablo-na-proplanku.jpg", "Stablo na proplanku", "A solitary tree in the clearing"],
+  ["planinski-greben-smetova.jpg", "Planinski greben Smetova", "The mountain ridge of Smetovi"],
+  ["zimsko-stablo.jpg", "Zimsko stablo", "A tree in the winter landscape"],
+  ["jesenji-pejzaz-smetova.jpg", "Jesenji pejzaž Smetova", "The autumn landscape of Smetovi"],
+  ["suma-iz-pticije-perspektive.jpg", "Šuma iz ptičije perspektive", "The forest from a bird's-eye view"],
+  ["spomenik-u-jesen.jpg", "Spomenik u jesen", "The monument in autumn"],
+  ["zimski-vidikovac.jpg", "Zimski vidikovac", "A winter viewpoint"],
+  ["sareni-brezuljci-smetova.jpg", "Šareni brežuljci Smetova", "The colourful hills of Smetovi"],
+];
+
+const images = imageDefinitions.map(([fileName, captionBs, captionEn]) => ({
+  src: `/images/gallery/dron-ba/${fileName}`,
+  caption: lang === "en" ? captionEn : captionBs,
+  source: "https://www.dron.ba/",
+  author: "dron.ba",
+  license: lang === "en" ? "Published with permission" : "Objavljeno uz odobrenje",
+}));
+
+const videos = [
   {
-    src: "/images/gallery/prilaz-smetovima.jpg",
-    caption: lang === "en" ? "The road towards Smetovi" : "Put prema Smetovima",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi.JPG",
-    author: "Soman",
-    license: lang === "en" ? "Public domain" : "Javno vlasništvo",
+    id: "ZIKu4Z6oIqI",
+    thumbnail: "/images/video/zimski-put-prema-smetovima.jpg",
+    title: lang === "en" ? "The winter road to Smetovi" : "Zimski put prema Smetovima",
   },
   {
-    src: "/images/gallery/spomenik-smetovi.jpg",
-    caption: lang === "en" ? "The monument on Smetovi" : "Spomenik na Smetovima",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi2.JPG",
-    author: "Soman",
-    license: lang === "en" ? "Public domain" : "Javno vlasništvo",
+    id: "XihxxLA9mqE",
+    thumbnail: "/images/video/smetovi-iznad-oblaka.jpg",
+    title: lang === "en" ? "Smetovi above the clouds" : "Smetovi iznad oblaka",
   },
   {
-    src: "/images/gallery/zimski-plato.jpg",
-    caption: lang === "en" ? "The snowy Smetovi plateau" : "Snježni plato Smetova",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi_Zenica_20180325_184611.jpg",
-    author: "Obsuser",
-    license: "CC BY-SA 4.0",
-  },
-  {
-    src: "/images/gallery/planinarski-dom-smetovi.jpg",
-    caption: lang === "en" ? "Smet mountain lodge" : "Planinarski dom Smet",
-    source: "https://commons.wikimedia.org/wiki/File:Smetoviinn.JPG",
-    author: "Soman",
-    license: lang === "en" ? "Public domain" : "Javno vlasništvo",
-  },
-  {
-    src: "/images/gallery/pogled-sa-smetova.jpg",
-    caption: lang === "en" ? "A view of the surrounding mountains" : "Pogled na okolne planine",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi_Zenica_20180325_170855.jpg",
-    author: "Obsuser",
-    license: "CC BY-SA 4.0",
-  },
-  {
-    src: "/images/gallery/smetovi-pod-snijegom.jpg",
-    caption: lang === "en" ? "Smetovi covered in snow" : "Smetovi pod snijegom",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi_Zenica_20180325_184741.jpg",
-    author: "Obsuser",
-    license: "CC BY-SA 4.0",
-  },
-  {
-    src: "/images/gallery/zimske-planine.jpg",
-    caption: lang === "en" ? "A winter mountain panorama" : "Zimska panorama planina",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi_Zenica_20180325_184607.jpg",
-    author: "Obsuser",
-    license: "CC BY-SA 4.0",
-  },
-  {
-    src: "/images/gallery/zimski-put.jpg",
-    caption: lang === "en" ? "A winter road on Smetovi" : "Zimski put na Smetovima",
-    source: "https://commons.wikimedia.org/wiki/File:Smetovi_Zenica_20180325_184613.jpg",
-    author: "Obsuser",
-    license: "CC BY-SA 4.0",
+    id: "ZEGLJA31zig",
+    thumbnail: "/images/video/jesen-na-smetovima.jpg",
+    title: lang === "en" ? "Autumn on Smetovi" : "Jesen na Smetovima",
   },
 ];
 
@@ -75,13 +60,25 @@ const labels = lang === "en"
       next: "Next image",
       dialog: "Image preview",
       count: "photographs",
-      credits: "Photo credits",
+      videoCount: "videos",
+      credits: "Content credits",
       photoBy: "Photo",
-      licenseNotice: "The author, source and license are listed with each photograph.",
+      licenseNotice: "The author, source and publication permission are listed with each item.",
       contributeEyebrow: "Open gallery",
       contributeTitle: "Share your view of Smetovi",
-      contributeText: "Do you have a photograph of Smetovi you would like to share? Email it to us as an attachment and, with your permission, we will add it to the gallery with your name clearly credited.",
+      contributeText: "Do you have a photograph or video of Smetovi you would like to share? Send the photograph as an attachment or include a link to the video. We review every submission and select the best content that fits the theme and quality of the gallery, always with clear author credit.",
       contributeAction: "Send by email",
+      videoEyebrow: "Smetovi in motion",
+      videoTitle: "Smetovi from the air",
+      videoDescription: "Experience the seasons and landscapes of Smetovi through aerial footage by dron.ba.",
+      playVideo: "Play video",
+      videoCredit: "Video",
+      videoPermission: "Published with the author's permission",
+      videoDialog: "Video preview",
+      closeVideo: "Close video",
+      photoEyebrow: "Photo gallery",
+      photoTitle: "Smetovi through the lens",
+      photoDescription: "Selected views of Smetovi through photographs by our contributors.",
     }
   : {
       eyebrow: "Otkrijte Smetove",
@@ -91,21 +88,33 @@ const labels = lang === "en"
       next: "Sljedeća fotografija",
       dialog: "Pregled fotografije",
       count: "fotografija",
-      credits: "Autori fotografija",
+      videoCount: "videa",
+      credits: "Autori sadržaja",
       photoBy: "Foto",
-      licenseNotice: "Autor, izvor i licenca navedeni su uz svaku fotografiju.",
+      licenseNotice: "Autor, izvor i odobrenje za objavu navedeni su uz svaki sadržaj.",
       contributeEyebrow: "Otvorena galerija",
       contributeTitle: "Podijelite svoj pogled na Smetove",
-      contributeText: "Imate fotografiju Smetova koju želite podijeliti? Pošaljite nam je kao prilog email poruke i, uz vašu saglasnost, dodat ćemo je u galeriju uz jasno navedeno ime autora.",
+      contributeText: "Imate fotografiju ili video Smetova koji želite podijeliti? Fotografiju pošaljite kao prilog, a za video priložite link. Sve pristigle materijale pregledamo i za galeriju biramo najbolje sadržaje koji odgovaraju njenoj temi i kvalitetu, uvijek uz jasno navedeno ime autora.",
       contributeAction: "Pošaljite email",
+      videoEyebrow: "Smetovi u pokretu",
+      videoTitle: "Smetovi iz zraka",
+      videoDescription: "Doživite godišnja doba i pejzaže Smetova kroz snimke iz zraka autora dron.ba.",
+      playVideo: "Pokreni video",
+      videoCredit: "Video",
+      videoPermission: "Objavljeno uz odobrenje autora",
+      videoDialog: "Pregled videa",
+      closeVideo: "Zatvori video",
+      photoEyebrow: "Galerija fotografija",
+      photoTitle: "Smetovi kroz objektiv",
+      photoDescription: "Odabrani pogledi na Smetove kroz fotografije naših autora.",
     };
 
 const contributionSubject = lang === "en"
-  ? "Photograph for the Smetovi gallery"
-  : "Fotografija za galeriju Smetova";
+  ? "Content for the Smetovi gallery"
+  : "Sadržaj za galeriju Smetova";
 const contributionBody = lang === "en"
-  ? "Hello,\n\nI would like to submit a photograph for the Smetovi gallery. I have attached the photograph to this email.\n\nAuthor name:\nPhotograph description:\n\nI confirm that I am the author of the photograph or that I have permission from the copyright holder to submit it. I grant the smetovi.ba project a non-exclusive, royalty-free permission to publish the photograph, adapt it for display on the web and use it to promote the project, with clear attribution to the author. I confirm that its publication does not infringe the rights of third parties and that I have obtained any necessary consent from identifiable people shown in the photograph."
-  : "Pozdrav,\n\nŽelim poslati fotografiju za galeriju Smetova. Fotografiju sam priložio/la uz ovu poruku.\n\nIme autora:\nOpis fotografije:\n\nPotvrđujem da sam autor fotografije ili da imam ovlaštenje nosioca autorskih prava za njeno ustupanje. Dajem projektu smetovi.ba neisključivu i besplatnu dozvolu da fotografiju objavi, prilagodi za prikaz na webu i koristi za promociju projekta, uz navođenje autora. Potvrđujem da objava ne krši prava trećih osoba i da imam potrebne saglasnosti prepoznatljivih osoba na fotografiji.";
+  ? "Hello,\n\nI would like to submit content for the Smetovi gallery.\n\nContent type (photograph/video):\nAuthor name:\nDescription:\nVideo link, if applicable:\n\nI confirm that I am the author of the submitted content or that I have permission from the copyright holder to submit it. I grant the smetovi.ba project a non-exclusive, royalty-free permission to publish the content, adapt it for display on the web and use it to promote the project, with clear attribution to the author. I confirm that its publication does not infringe the rights of third parties and that I have obtained any necessary consent from identifiable people shown in the content."
+  : "Pozdrav,\n\nŽelim poslati sadržaj za galeriju Smetova.\n\nVrsta sadržaja (fotografija/video):\nIme autora:\nOpis:\nLink na video, ako je primjenjivo:\n\nPotvrđujem da sam autor dostavljenog sadržaja ili da imam ovlaštenje nosioca autorskih prava za njegovo ustupanje. Dajem projektu smetovi.ba neisključivu i besplatnu dozvolu da sadržaj objavi, prilagodi za prikaz na webu i koristi za promociju projekta, uz navođenje autora. Potvrđujem da objava ne krši prava trećih osoba i da imam potrebne saglasnosti prepoznatljivih osoba prikazanih u sadržaju.";
 const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(contributionSubject)}&body=${encodeURIComponent(contributionBody)}`;
 ---
 
@@ -119,7 +128,62 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
       <h1>{tr.gallery.title}</h1>
       <div class="gallery-accent" aria-hidden="true"></div>
       <p class="gallery-description">{tr.gallery.description}</p>
-      <span class="gallery-count">{images.length} {labels.count}</span>
+      <span class="gallery-count">
+        {videos.length} {labels.videoCount}
+        <span aria-hidden="true"> · </span>
+        {images.length} {labels.count}
+      </span>
+    </header>
+
+    <section class="video-gallery" aria-labelledby="video-gallery-title">
+      <header class="video-gallery__header">
+        <p>{labels.videoEyebrow}</p>
+        <h2 id="video-gallery-title">{labels.videoTitle}</h2>
+        <span>{labels.videoDescription}</span>
+      </header>
+
+      <div class="video-gallery__grid">
+        {videos.map((video) => (
+          <article class="video-card">
+            <div class="video-card__player">
+              <button
+                type="button"
+                data-youtube-id={video.id}
+                data-youtube-title={video.title}
+                aria-label={`${labels.playVideo}: ${video.title}`}
+              >
+                <img
+                  src={video.thumbnail}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="video-card__shade" aria-hidden="true"></span>
+                <span class="video-card__play" aria-hidden="true">
+                  <span></span>
+                </span>
+              </button>
+            </div>
+            <div class="video-card__content">
+              <h3>{video.title}</h3>
+              <p>
+                {labels.videoCredit}:{" "}
+                <a href="https://www.dron.ba/" target="_blank" rel="noreferrer">
+                  dron.ba
+                </a>
+                <span aria-hidden="true"> · </span>
+                {labels.videoPermission}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <header class="video-gallery__header photo-gallery__header">
+      <p>{labels.photoEyebrow}</p>
+      <h2>{labels.photoTitle}</h2>
+      <span>{labels.photoDescription}</span>
     </header>
 
     <section class="gallery-grid" aria-label={tr.gallery.title}>
@@ -134,7 +198,7 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
             <img
               src={image.src}
               alt={image.caption}
-              loading={index < 2 ? "eager" : "lazy"}
+              loading="lazy"
               decoding="async"
             />
             <span class="gallery-item__overlay">
@@ -215,6 +279,29 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
     >
       <span aria-hidden="true">›</span>
     </button>
+  </div>
+
+  <div
+    id="video-modal"
+    class="video-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label={labels.videoDialog}
+    aria-hidden="true"
+  >
+    <div class="video-modal__backdrop" data-video-close></div>
+    <div class="video-modal__content">
+      <button
+        class="video-modal__close"
+        type="button"
+        data-video-close
+        aria-label={labels.closeVideo}
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      <div id="video-modal-player" class="video-modal__player"></div>
+      <p id="video-modal-title"></p>
+    </div>
   </div>
 </PageLayout>
 
@@ -483,6 +570,243 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
     text-underline-offset: 2px;
   }
 
+  .video-gallery {
+    width: min(1180px, 100%);
+    margin: 0 auto 4.5rem;
+  }
+
+  .video-gallery__header {
+    max-width: 720px;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-gallery__header p {
+    margin: 0 0 0.45rem;
+    color: #d86420;
+    font-family: "Exo2", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .video-gallery__header h2 {
+    margin: 0;
+    color: #082f49;
+    font-family: "Exo2", sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    line-height: 1.15;
+  }
+
+  .video-gallery__header span {
+    display: block;
+    margin-top: 0.65rem;
+    color: #5b6870;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .photo-gallery__header {
+    width: min(1180px, 100%);
+    max-width: none;
+    margin: 0 auto 1.5rem;
+  }
+
+  .video-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .video-card {
+    overflow: hidden;
+    border: 1px solid #dbe5e9;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(8, 47, 73, 0.08);
+  }
+
+  .video-card__player {
+    aspect-ratio: 16 / 9;
+    background: #082f49;
+  }
+
+  .video-card__player button,
+  .video-card__player iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-card__player button {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    background: #082f49;
+  }
+
+  .video-card__player img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 350ms ease;
+  }
+
+  .video-card__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(4, 30, 43, 0.35));
+  }
+
+  .video-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    background: #f97316;
+    box-shadow: 0 8px 24px rgba(4, 30, 43, 0.32);
+    transform: translate(-50%, -50%);
+    transition: background 180ms ease, transform 180ms ease;
+  }
+
+  .video-card__play span {
+    width: 0;
+    height: 0;
+    margin-left: 4px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 13px solid #ffffff;
+  }
+
+  .video-card__player button:hover img {
+    transform: scale(1.035);
+  }
+
+  .video-card__player button:hover .video-card__play {
+    background: #ea580c;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  .video-card__player button:focus-visible {
+    outline: 4px solid rgba(249, 115, 22, 0.75);
+    outline-offset: -4px;
+  }
+
+  .video-card__content {
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .video-card__content h3 {
+    margin: 0;
+    color: #163b4d;
+    font-family: "Exo2", sans-serif;
+    font-size: 1.08rem;
+    line-height: 1.3;
+  }
+
+  .video-card__content p {
+    margin: 0.55rem 0 0;
+    color: #6b7b83;
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .video-card__content a {
+    color: #285f76;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    visibility: hidden;
+    place-items: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 220ms ease, visibility 220ms ease;
+  }
+
+  .video-modal.is-open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .video-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 16, 23, 0.94);
+    backdrop-filter: blur(8px);
+  }
+
+  .video-modal__content {
+    position: relative;
+    z-index: 1;
+    width: min(1120px, 92vw);
+  }
+
+  .video-modal__player {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+    background: #031017;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.6);
+  }
+
+  :global(.video-modal__iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-modal__content > p {
+    margin: 0.85rem 3.5rem 0 0;
+    color: #ffffff;
+    font-family: "Exo2", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .video-modal__close {
+    position: absolute;
+    right: 0;
+    bottom: -3.15rem;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    z-index: 2;
+    place-items: center;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 1.9rem;
+    line-height: 1;
+  }
+
+  .video-modal__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .video-modal__close:focus-visible {
+    outline: 3px solid #f97316;
+    outline-offset: 3px;
+  }
+
   .slider-modal {
     position: fixed;
     inset: 0;
@@ -605,6 +929,10 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
       grid-template-columns: 3.5rem minmax(0, 1fr) 3.5rem;
       padding: 1rem;
     }
+
+    .video-gallery__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 600px) {
@@ -649,6 +977,26 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
       justify-content: center;
     }
 
+    .video-gallery {
+      margin-bottom: 3.25rem;
+    }
+
+    .video-gallery__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .video-modal {
+      padding: 1rem;
+    }
+
+    .video-modal__content {
+      width: 100%;
+    }
+
+    .video-modal__player {
+      border-radius: 8px;
+    }
+
     .slider-modal {
       display: flex;
       align-items: center;
@@ -687,6 +1035,9 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
   @media (prefers-reduced-motion: reduce) {
     .gallery-item img,
     .gallery-item__overlay,
+    .video-card__player img,
+    .video-card__play,
+    .video-modal,
     .slider-modal,
     .slider-control {
       transition: none;
@@ -706,9 +1057,17 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
   const directionButtons = document.querySelectorAll<HTMLButtonElement>(
     "[data-slider-direction]"
   );
+  const videoButtons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-youtube-id]"
+  );
+  const videoModal = document.querySelector<HTMLElement>("#video-modal");
+  const videoModalPlayer = document.querySelector<HTMLElement>("#video-modal-player");
+  const videoModalTitle = document.querySelector<HTMLElement>("#video-modal-title");
+  const videoCloseButtons = document.querySelectorAll<HTMLElement>("[data-video-close]");
 
   let currentIndex = 0;
   let lastFocusedElement: HTMLElement | null = null;
+  let lastFocusedVideoButton: HTMLButtonElement | null = null;
 
   function updateSlider() {
     const selected = galleryItems[currentIndex];
@@ -763,7 +1122,53 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
     });
   });
 
+  videoButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const videoId = button.dataset.youtubeId;
+      const videoTitle = button.dataset.youtubeTitle;
+
+      if (!videoId || !videoModal || !videoModalPlayer) return;
+
+      const iframe = document.createElement("iframe");
+      iframe.className = "video-modal__iframe";
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+      iframe.title = videoTitle ?? "YouTube video";
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allowFullscreen = true;
+      videoModalPlayer.replaceChildren(iframe);
+      if (videoModalTitle) videoModalTitle.textContent = videoTitle ?? "";
+
+      lastFocusedVideoButton = button;
+      videoModal.classList.add("is-open");
+      videoModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      videoModal.querySelector<HTMLButtonElement>(".video-modal__close")?.focus();
+    });
+  });
+
+  function closeVideoModal() {
+    if (!videoModal || !videoModalPlayer) return;
+
+    videoModal.classList.remove("is-open");
+    videoModal.setAttribute("aria-hidden", "true");
+    videoModalPlayer.replaceChildren();
+    if (videoModalTitle) videoModalTitle.textContent = "";
+    document.body.style.overflow = "";
+    lastFocusedVideoButton?.focus();
+  }
+
+  videoCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeVideoModal);
+  });
+
   document.addEventListener("keydown", (event) => {
+    if (videoModal?.classList.contains("is-open")) {
+      if (event.key === "Escape") closeVideoModal();
+      return;
+    }
+
     if (!modal?.classList.contains("is-open")) return;
 
     if (event.key === "Escape") closeSlider();
