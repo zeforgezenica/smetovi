@@ -448,8 +448,14 @@ const contributionHref = `mailto:info@zeforge.ba?subject=${encodeURIComponent(co
     color: white;
     font-family: "Exo2", sans-serif;
     font-weight: 700;
+    text-align: left;
     opacity: 0;
     transition: opacity 250ms ease;
+  }
+
+  .gallery-item__overlay > span:first-child {
+    min-width: 0;
+    text-align: left;
   }
 
   .gallery-item__icon {
