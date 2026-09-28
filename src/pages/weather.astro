@@ -141,7 +141,7 @@ function formatUpdated(value: string): string {
                 <p>{tr.weather.unavailable}</p>
             </div>
         ) : (
-            <>
+            <Fragment>
                 <section class={`road-card ${isDifficult ? "road-card--difficult" : ""}`} aria-labelledby="road-title">
                     <div class="road-heading">
                         <div class="road-icon"><i class="fa-solid fa-road" aria-hidden="true"></i></div>
@@ -244,7 +244,7 @@ function formatUpdated(value: string): string {
                         ))}
                     </div>
                 </section>
-            </>
+            </Fragment>
         )}
 
         <section class="cameras-section" aria-labelledby="cameras-title">
